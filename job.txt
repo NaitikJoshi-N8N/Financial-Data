@@ -1,0 +1,3141 @@
+You are Claude Opus 4.5, acting as a principal Google Apps Script engineer, systems designer, and senior UI architect.
+
+You are working on an existing Google Apps Script application whose logic, sheet wiring, and data behavior are already correct.
+
+Your job is to:
+
+Deeply analyze the existing system
+
+Modernize and elevate the UI to a premium, professional standard
+
+Design and propose optional features, including one explicitly required feature described below
+
+Wait for explicit approval before implementing any new feature
+
+When approved, generate clean, efficient, file-by-file code with zero logic regression
+
+ABSOLUTE CONSTRAINTS (NON-NEGOTIABLE)
+PLATFORM
+
+Google Apps Script only
+
+.gs for server logic
+
+HtmlService for UI
+
+Vanilla HTML / CSS / JS only
+
+No frameworks, no bundlers, no unsupported APIs
+
+LOGIC IS IMMUTABLE
+
+You must treat the existing logic as read-only and behavior-locked.
+
+❌ You must NOT change:
+
+Sheet IDs
+
+Spreadsheet schemas or assumptions
+
+Data fetch logic
+
+Data transformation logic
+
+Output formats
+
+Function signatures
+
+Execution order
+
+Writes, triggers, or side effects
+
+✅ You MAY:
+
+Call existing logic
+
+Wrap logic without altering behavior
+
+Add new, isolated logic only for approved features
+
+Improve efficiency only if behavior is provably identical
+
+If there is any doubt, do not change it.
+
+🔒 CANONICAL UI DESIGN SYSTEM (ALREADY EXTRACTED — APPLY, DO NOT REDISCOVER)
+Fonts
+
+Primary UI font: Space Grotesk
+
+Data / numeric font: Space Mono
+
+Google Fonts are allowed
+
+Core Color Tokens (Baseline, Not a Prison)
+--bg-primary: #000000;
+--bg-secondary: #0a0a0a;
+--bg-elevated: #111111;
+--bg-card: #151515;
+
+--border: #1f1f1f;
+--border-hover: #2a2a2a;
+
+--text-primary: #ffffff;
+--text-secondary: #888888;
+--text-muted: #555555;
+
+--accent-green: #00ff88;
+--accent-red: #ff0055;
+--accent-yellow: #ffcc00;
+
+
+You MAY introduce additional supporting colors if they:
+
+Preserve a premium, restrained aesthetic
+
+Do not introduce visual noise
+
+Are used consistently
+
+Typography Rules
+
+Meta labels: 9–11px, uppercase, letter-spacing 1–2px
+
+Body text: 12–14px
+
+Headings: uppercase, tracked, 600–700 weight
+
+Numbers / codes: monospace, 700 weight
+
+No decorative or novelty fonts
+
+Visual Language
+
+Clean, minimal, premium
+
+Analytical, calm, confident
+
+High contrast, restrained effects
+
+Thin borders (1px)
+
+Minimal radius (2–4px)
+
+Subtle glow ONLY for meaningful active states
+
+No gimmicks, no trend bait
+
+Layout & Components (Guiding, Not Rigid)
+
+Top system / navigation bar
+
+Panels with headers and subtitles
+
+Metrics / stats areas
+
+Grid or list-based cards
+
+Dark inputs with clear focus states
+
+Buttons:
+
+Secondary: dark, bordered
+
+Primary: light background, dark text
+
+Tables:
+
+Sticky headers
+
+Row hover feedback
+
+Clear empty, loading, and error states
+
+Do not hard-code resolution assumptions. The UI should simply be good.
+
+REQUIRED FEATURE (DESIGN + PROPOSE, DO NOT IMPLEMENT YET)
+
+In addition to existing “recommendations” functionality, the system must support:
+
+📊 CASE DISTRIBUTION + ADMIN MANAGEMENT (REQUIRED FEATURE)
+
+You MUST design and propose a feature that:
+Equally distributes cases among analysts
+
+Cases are categorized by type (exact names may vary). Assume four types by default (placeholders are acceptable, service and fraud are two of the types).
+
+Distribution operates via a dynamic, expiry-aware queue system, not static assignment:
+
+Only analysts whose email is explicitly present in the codebase are authorized to access the analyst workflow
+
+Active analysts are determined at runtime based on actual presence/usage of the app (using existing activity/session logic if available)
+
+The system derives the current active analyst count dynamically, not from configuration alone
+
+Cases are not permanently assigned to individuals
+
+Cases are pulled from a priority queue ordered by nearest expiry first
+
+As active analysts use the tool, they are served the next eligible case from the queue
+
+If an analyst becomes inactive, signs out, or disconnects, cases automatically rebalance with no manual reassignment
+
+The system aims to:
+
+Balance total case volume per active analyst over time
+
+Balance case types as evenly as possible
+
+Gracefully handle uneven scenarios (unequal analysts, uneven case counts), allowing ±1 variance where unavoidable
+Allows:
+
+Adding/removing analysts
+
+Enabling/disabling analysts
+
+Viewing assignment summaries
+
+Admin access is restricted by email
+
+Placeholder: admin@adminpanel.com
+
+Access denied if user email not whitelisted
+
+Sheet Integration
+
+If a “case type” column already exists, use it
+
+If not:
+
+Propose adding a column with four placeholder values
+
+User will later map these to real values
+
+Do not silently mutate sheet schemas
+
+Isolation & Safety
+
+This feature must be:
+
+Fully optional
+
+Feature-flagged
+
+Removable without touching core logic
+
+You must explain the logic strategy for fair distribution clearly, including edge cases.
+
+PROCESS (MANDATORY, NO SKIPPING)
+STEP 1 — ANALYSIS ONLY
+
+Analyze the entire codebase
+
+Output:
+
+Logic map (reads, writes, responsibilities)
+
+UI interaction map
+
+Efficiency observations (without changing behavior)
+
+NO code changes
+
+STEP 2 — FEATURE PROPOSALS
+
+Propose:
+
+The required Case Distribution + Admin feature
+
+Any additional OPTIONAL features you believe add value
+
+For EACH feature:
+
+Description
+
+UX benefit
+
+Logic impact (if any)
+
+Files affected
+
+Risk level
+
+Whether it is fully isolatable
+
+DO NOT IMPLEMENT YET.
+
+STEP 3 — WAIT FOR APPROVAL
+
+You must explicitly ask the user to:
+
+Approve features
+
+Reject features
+
+Modify scope
+
+Or proceed with UI-only execution
+
+No approval = no feature code.
+
+IMPLEMENTATION RULES (AFTER APPROVAL ONLY)
+
+If approved:
+
+Implement features behind a config object
+
+Example:
+
+const FEATURES = {
+  ENABLE_CASE_DISTRIBUTION: true,
+  ENABLE_ADMIN_PANEL: true
+};
+
+
+Generate code file by file
+
+Clearly state:
+
+Which file each block belongs to
+
+Any manual edits required
+
+Any configuration values to change before execution
+
+OUTPUT STANDARDS
+
+Structured
+
+Explicit
+
+No filler
+
+No assumptions
+
+No TODOs
+
+Production-ready
+
+BEGIN
+
+The codebase follows immediately after this prompt.
+
+Start with STEP 1 — ANALYSIS ONLY.
+
+
+BEGINNING OF FILE 1 casemanagement.gs
+var ss = SpreadsheetApp.openById("1LxZiB_TTCxLMa-xwHhOsC4C1D-jneBQAE2wF8f_YEQ4").getSheetByName("database") //rca sheet
+var dashboard = SpreadsheetApp.openById("1LxZiB_TTCxLMa-xwHhOsC4C1D-jneBQAE2wF8f_YEQ4").getSheetByName("Dashboard"); //rca sheet
+var controllerSheet = SpreadsheetApp.openById("1P4MLBYGsco4Wh1TnmnZjaxjNG7GBeZRXeIKf8oF36UQ").getSheetByName("datasheet")
+var tempSheet = SpreadsheetApp.openById("1P4MLBYGsco4Wh1TnmnZjaxjNG7GBeZRXeIKf8oF36UQ").getSheetByName("Temp")
+var recoverySheet = SpreadsheetApp.openById("1Gj6LfsQNfFHhFGDfIQ9X63yHjqVLma-luFfvl9Ju4h8").getSheetByName("data")
+var vbExceptionSheet = SpreadsheetApp.openById("1ib7kcguVEXFoACNhZUxf-VDFbT-DlP74R9WO9l7FFnk").getSheetByName("data")
+var emConfirmationSheet = SpreadsheetApp.openById('1FqABBeWj9L8F4z_RE5DGAdOFoUMp8F6Aq1i_uj3Yy7w')
+
+var lastrow_recovery = recoverySheet.getLastRow()
+var lastrow_controller = controllerSheet.getLastRow()
+var Lastrow = ss.getLastRow();
+var users = ["jeevan.bist@priceline.com",
+"arun.choubey@priceline.com",
+"anusha.shetty@priceline.com",
+"nitingopal.singh@priceline.com",
+"deb.mukherjee@priceline.com",
+"tapas.sharma@priceline.com",
+"avdhut.bidwe@priceline.com",
+"priyanka.thakkar@priceline.com",
+"viren.joshi@priceline.com",
+"shwetank.mishra@priceline.com",
+"zankhana.yagnik@priceline.com",
+"sandeep.agrawal@priceline.com",
+"zankhit.mehta@priceline.com",
+"krutika.patel@priceline.com",
+"jayesh.parmar@priceline.com",
+"priyanka.ratudi@priceline.com",
+"tirth.soni@priceline.com",
+"sanyam.sisodiya@priceline.com",
+"bharati.dash@priceline.com",
+"harshil.girnari@priceline.com",
+"kunal.jadaun@priceline.com",
+"mrunal.patel@priceline.com",
+"aniket.jha@priceline.com",
+"anagha.s@priceline.com",
+"easwaran.m@priceline.com",
+"anjali.raj@priceline.com"
+]
+
+function NotClaimedCasesV4(){
+  var user = Session.getActiveUser().getEmail();
+  var rowAssigned = users.indexOf(user)+7 
+  var tempCell = dashboard.getRange("AC"+rowAssigned.toString()) 
+  var row = 0;
+  
+  var filterFormula = `=Index(FILTER(ROW(database!Q:Q),(ISBLANK(database!Q:Q))+(database!Q:Q="Pending"), (ISBLANK(database!R:R))+(database!R:R="${user}"),(ISBLANK(database!S:S))),1)`;
+  
+  tempCell.setFormula(filterFormula)
+  var result = tempCell.getValue()
+  tempCell.clearContent();
+
+  if(result<=Lastrow && result!="#N/A"){
+    row = result;
+  }
+   return row
+}
+
+function NotClaimedCasesV2(currency,portal){
+ 
+  var user = Session.getActiveUser().getEmail();  
+  var valuesAnalyst = ss.getRange(2,18,Lastrow).getValues()
+  var valuesResolveDate = ss.getRange(2,19,Lastrow).getValues();  
+  var valuesCurrency = ss.getRange(2,12,Lastrow).getValues(); 
+  var valuesPortal = ss.getRange(2,33,Lastrow).getValues();
+  var valuesRCA = ss.getRange(2,17,Lastrow).getValues();
+  
+
+  if(currency == "Non USD"){
+    for(i=0; i<valuesAnalyst.length;i++){
+      if((valuesAnalyst[i][0]=="" || valuesAnalyst[i][0]==user ) && (valuesRCA[i][0] == "Pending" || valuesRCA[i][0] == "") && (valuesCurrency[i][0] != "USD") && (valuesPortal[i][0]== portal) && (valuesResolveDate[i][0] == "") ){
+        
+        return i+2;
+        break;
+      }    
+    }
+  }
+  else{
+     for(i=0; i<valuesAnalyst.length;i++){
+      if((valuesAnalyst[i][0]=="" || valuesAnalyst[i][0]==user ) && (valuesRCA[i][0] == "Pending" || valuesRCA[i][0] == "") && (valuesCurrency[i][0] == "USD") && (valuesPortal[i][0]== portal) && (valuesResolveDate[i][0] == "")){
+        
+        return i+2;
+        break;
+      }  
+
+     }
+  }
+  
+
+  if(i=valuesAnalyst.length){
+    
+    return 0
+  }
+
+}
+
+function ClaimCase(row) {
+  var user = Session.getActiveUser().getEmail()
+  ss.getRange(row,18).setValue(user)
+  ss.getRange(row,17).setValue("Pending")
+  ss.getRange(row,32).setValue(new Date())
+}
+
+function getCase( portal){
+var data = new Array();
+if(portal=="Priority"){
+  var row = NotClaimedPriority()
+}
+else{
+  var row = NotClaimedCasesV4()
+}
+
+
+if(users.includes(Session.getActiveUser().getEmail())){
+  if (row>0) {
+    ClaimCase(row)
+    data.push("Case claimed.")
+    data.push(row)
+    data.push(ss.getRange(row,1).getValue()) // caseid
+    data.push(ss.getRange(row,2).getValue()) // itn
+    data.push(ss.getRange(row,9).getValue()) // R#
+    data.push(ss.getRange(row,4).getValue()) // rCode
+    data.push(ss.getRange(row,7).getValue()) // dAmt
+    data.push(ss.getRange(row,13).getValue()) //dispute type   
+    data.push(ss.getRange(row,27).getValue()) //refund
+    data.push(ss.getRange(row,10).getValue()) // tAmt
+    data.push(ss.getRange(row,12).getValue()) // currency   
+        
+    data.push(Utilities.formatDate(ss.getRange(row,5).getValue(),"IST","MM/dd/yyyy")) // rDate
+    data.push(Utilities.formatDate(ss.getRange(row,6).getValue(),"IST","MM/dd/yyyy"))// dDue
+    data.push(ss.getRange(row,33).getValue()) // portal
+    data.push(ss.getRange(row,29).getValue()) // policy
+    data.push(ss.getRange(row,22).getValue()) // internal notes
+    data.push(ss.getRange(row,35).getValue()) // affirm link
+    
+  }
+  else{
+    
+    data.push("No Cases","","","","","","","","","","","","","","","","")
+    data.push(0)
+  }
+}
+
+else {
+    
+    data.push("You are not Authorized","","","","","","","","","","","","","","","","")
+    data.push(0)
+
+}
+ return data
+}
+
+function searchCase(itn){  
+  
+  var user = Session.getActiveUser().getEmail();
+  var ITNs = ss.getRange(2,2,Lastrow).getValues();
+  var RCAanalysts = ss.getRange(2,18,Lastrow).getValues();
+  var row = 0
+  for(i=0;i<ITNs.length;i++){
+    if(ITNs[i][0] == itn && RCAanalysts[i][0] == user){
+      row = i+2;
+      break;
+    }
+  }
+  var data = new Array()
+  if(row != 0) {
+    data.push("Case retrieved.")
+    data.push(row)
+    data.push(ss.getRange(row,1).getValue()) // caseid
+    data.push(ss.getRange(row,2).getValue()) // itn
+    data.push(ss.getRange(row,9).getValue()) // R#
+    data.push(ss.getRange(row,4).getValue()) // rCode
+    data.push(ss.getRange(row,7).getValue()) // dAmt
+    data.push(ss.getRange(row,13).getValue()) //dispute type   
+    data.push(ss.getRange(row,27).getValue()) //refund
+    data.push(ss.getRange(row,10).getValue()) // tAmt
+    data.push(ss.getRange(row,12).getValue()) // currency   
+        
+    data.push(Utilities.formatDate(ss.getRange(row,5).getValue(),"IST","MM/dd/yyyy")) // rDate
+    data.push(Utilities.formatDate(ss.getRange(row,6).getValue(),"IST","MM/dd/yyyy"))// dDue
+    data.push(ss.getRange(row,33).getValue()) // portal
+    data.push(ss.getRange(row,29).getValue()) // policy
+    data.push(ss.getRange(row,20).getValue()) // issuer notes
+    data.push(ss.getRange(row,21).getValue()) // rebuttal
+    data.push(ss.getRange(row,22).getValue()) // internal notes
+    data.push(ss.getRange(row,35).getValue()) // affirm link
+    data.push(ss.getRange(row,17).getValue()) // rca
+
+  }
+  else {
+    data.push("No Results","","","","","","","","","","","","","","","","","","","");
+  }
+  return data
+}
+
+
+function getReservationData(itn){
+  
+  //gets the data of transaction from the current sheet for the given ITN
+
+  //Reservation Number, Token ID, Booking Date, Trans Amt,  Currency, Customer Email, Billing Phone,  Billing Name, Billing Street, Billing City, Billing Zip,  Hotel Name, Hotel Address,  Guest Name, Check In, Check Out,  Room Type,  Cancel Policy,  Hotel Billed Merchant,  Accertify Index Score,  Refund to Customer, Customer Contact, IP Info,  Proof of Non Fraud, Proof of Non Fraud,
+   const searchRange = 'datasheet!A:A'; // Adjust the range accordingly
+  const searchValue = itn; // Replace with the value you're searching for
+
+  // Use the MATCH formula with the specified range and value
+  const matchFormula = `=MATCH("${searchValue}", ${searchRange}, 0)`;
+  
+  var tempRowCell = users.indexOf(Session.getActiveUser().getEmail())+2;
+  // Run the formula using the SpreadsheetApp's evaluate capability
+  const tempCell = tempSheet.getRange('B'+tempRowCell.toString()); // Temporary cell to evaluate the formula
+  tempCell.setFormula(matchFormula);
+  
+  // Wait for the formula to compute and get the result
+  const row = tempCell.getValue();
+
+  
+  tempCell.clearContent();
+  
+  
+  var resinfo = new Array()
+  resinfo.push("Reservation information fetched.")
+  resinfo.push(row)
+  resinfo.push(controllerSheet.getRange(row,1).getValue()) //itn
+  resinfo.push(Utilities.formatDate(controllerSheet.getRange(row,4).getValue(),"CST","MM/dd/yyyy")) //booking date
+  /*
+  resinfo.push(controllerSheet.getRange(row,13).getValue()) //hotel
+  resinfo.push(controllerSheet.getRange(row,15).getValue()) //guest
+  resinfo.push(Utilities.formatDate(controllerSheet.getRange(row,16).getValue(),"CST","MM/dd/yyyy")) //check in
+  resinfo.push(Utilities.formatDate(controllerSheet.getRange(row,17).getValue(),"CST","MM/dd/yyyy")) //checkout
+  resinfo.push(controllerSheet.getRange(row,7).getValue()) //email
+  */
+  resinfo.push(controllerSheet.getRange(row,13).getValue()) //hotel
+  resinfo.push("guest") //guest
+  resinfo.push(Utilities.formatDate(controllerSheet.getRange(row,16).getValue(),"CST","MM/dd/yyyy")) //check in
+  resinfo.push(Utilities.formatDate(controllerSheet.getRange(row,17).getValue(),"CST","MM/dd/yyyy")) //checkout
+  resinfo.push("test") //email
+  var rtype = controllerSheet.getRange(row,18).getValue().trim() || "not available"
+  resinfo.push(rtype) //rtype
+  
+  
+  return resinfo
+  
+
+}
+
+
+
+function checkClaim(row){
+  var user = Session.getActiveUser().getEmail()
+  var claimed = ss.getRange(row,18).getValue()
+  
+  if(user == claimed){
+    var response = ["Case currently claimed to " + claimed,"#2ea44f","white"]
+  }
+  else{
+    var response = ["Case currently claimed to " + claimed,"red","white"]
+
+  }
+
+  return response
+
+  
+
+}
+
+
+
+function NotClaimedPriority(){
+  
+  var user = Session.getActiveUser().getEmail();  
+  var valuesAnalyst = ss.getRange(2,18,Lastrow).getValues()
+  var valuesResolveDate = ss.getRange(2,19,Lastrow).getValues();  
+  var valuesCurrency = ss.getRange(2,12,Lastrow).getValues(); 
+  var valuesPortal = ss.getRange(2,33,Lastrow).getValues();
+  var valuesRCA = ss.getRange(2,17,Lastrow).getValues();
+  var valuesQueue = ss.getRange(2,34,Lastrow).getValues();
+
+  var days = [0,1,2,3,4,5,6]
+  var row = 0;
+  for(j=0;j<days.length;j++){
+    for(i=0;i<valuesQueue.length;i++){
+      if((valuesQueue[i][0]==days[j]) && (valuesAnalyst[i][0]=="" || valuesAnalyst[i][0]==user ) && (valuesRCA[i][0] == "Pending" || valuesRCA[i][0] == "") ){
+        row=i;
+        break;
+        
+      }
+      }
+      
+      if(row>0){
+        break;
+      }
+    }    
+  
+
+    return row+2
+
+}
+
+function resolveRCA(row,rca, res, issuernotes,internalnotes){
+  ss.getRange(row,20).setValue(issuernotes)
+  ss.getRange(row,21).setValue(res)
+  ss.getRange(row,22).setValue(internalnotes)
+  ss.getRange(row,17).setValue(rca)
+  ss.getRange(row,19).setValue(new Date())
+  ss.getRange(row,24).clearContent()
+  sendForEmailConfirmation(row)
+  return "Case Updated."
+}
+
+var Fraud = ["10.4","37",10.4, 37, "AA", "Card Member does not recognise Transaction or Transaction Amount-6014", "Card not present fraud-F29", "Card not present-4540", "Does Not Recognize/ Remember/ No Knowledge-127", "Fraud-193", "Fraudulent Transactions-193", "No knowledge-127", "U02","Fraud","Card Member claims fraud-6006","Does Not Recognize/ Remember/ No Knowledge-176", 1040,"Fraud (No authorization)","Fraud (Card not present)","Not Recognized"]
+
+
+function sendForEmailConfirmation(row){
+  var code = ss.getRange(row,4).getValue()
+  var interface = ss.getRange(row,14).getValue()
+  var tempSheet = emConfirmationSheet.getSheetByName('temp')
+  var mainSheet = emConfirmationSheet.getSheetByName('data')
+
+  var creditnot = ["Credit Not Processed",13.7,1370, "13.7", "13.70","1370"]
+  
+
+  if(Fraud.includes(code) || (creditnot.includes(code) && interface=="call_center")){
+    var itn = ss.getRange(row,2).getValue()
+    var tempCell = tempSheet.getRange("B"+ (Math.floor(Math.random() * 10)))
+    tempCell.setFormula(`=COUNTIF(data!B:B,"${itn}")`)
+    if(tempCell.getValue()==0){
+        var lastrow_email = mainSheet.getLastRow()
+        var user = Session.getActiveUser().getEmail()
+        mainSheet.getRange(lastrow_email+1,1).setValue(user)
+        mainSheet.getRange(lastrow_email+1,2).setValue(itn)
+        var date = new Date()
+        mainSheet.getRange(lastrow_email+1,3).setValue(Utilities.formatDate(date,"CST","MM-dd-yyyy"))
+        mainSheet.getRange(lastrow_email+1,4).setValue(ss.getRange(row,6).getValue())
+        mainSheet.getRange(lastrow_email+1,5).setValue("Pending")
+        
+    }
+    tempCell.clearContent()
+  }
+}
+
+
+
+
+
+
+
+END OF FILE 1
+ 
+BEGINNING OF FILE 2 javascript.html
+<script>
+
+//status bar message and color
+function statusUpdate(msg,color,fontcolor){
+  var status = document.getElementById('status')
+  status.innerText = msg
+  status.style.background = color
+  status.style.color = fontcolor
+    setTimeout(function(){
+      status.innerText = ""
+      status.style.background = "hsl(233deg 36% 38%)"
+    }, 2000);
+  }
+ 
+
+// Function to toggle collapsible sections
+function toggleSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section.style.display === "none" || section.style.display === "") {
+        section.style.display = "block";
+      } else {
+        section.style.display = "none";
+      }
+    }
+
+/*
+// Function to add canned response to Rebuttal Response textarea
+function addCannedResponse(response) {
+      const rebuttalTextBox = document.getElementById('rebuttal-response');
+      rebuttalTextBox.value += "\n" + response + '\n';
+    }
+
+*/
+
+// New Function to add canned response to Rebuttal Response textarea
+function addCannedResponse(response) {
+    const textarea = document.getElementById('rebuttal-response');
+      // Get the current cursor position
+    const cursorPosition = textarea.selectionStart;
+
+    // Get the existing text
+    const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+    const textAfterCursor = textarea.value.substring(cursorPosition);
+
+    // Insert the canned response at the cursor position
+    textarea.value = textBeforeCursor + response + textAfterCursor;
+
+    // Set the cursor position after the inserted text
+    const newCursorPosition = cursorPosition + cannedResponse.length;
+    textarea.setSelectionRange(newCursorPosition, newCursorPosition);
+
+    // Focus back on the textarea
+    textarea.focus();
+    }
+
+
+//function to copy items to clipboard
+function copyToClipboard(labelId) {
+    // Get the label element by its ID
+    var label = document.getElementById(labelId);
+    
+    // Create a temporary text area element
+    var tempInput = document.createElement('textarea');
+    
+    // Set the value of the text area to the label's text
+    tempInput.value = label.innerText || label.textContent;
+    
+    // Append the text area to the document body (temporarily)
+    document.body.appendChild(tempInput);
+    
+    // Select the text in the text area
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); // For mobile devices
+    
+    // Copy the selected text to the clipboard
+    document.execCommand('copy');
+    
+    // Remove the temporary text area from the document
+    document.body.removeChild(tempInput);
+    statusUpdate("Copied.","#2ea44f","white")
+}
+
+//puts the case info into the case info table in HTML
+function inputCaseInfo(data){ 
+  statusUpdate(data[0],"#2ea44f","white")
+    var values = data;
+   
+    var table = document.getElementById('caseinfo')
+    // Counter for values array
+    var valueCounter = 1;
+
+    // Iterate through all rows of the table
+    for (var i = 0; i < table.rows.length; i++) {
+        var row = table.rows[i];
+
+        // Iterate through the cells of each row
+        for (var j = 0; j < row.cells.length; j++) {
+            // Insert into every other cell (even index cells, i.e., 0, 2, 4, etc.)
+            if ((i * row.cells.length + j) % 2 === 1 && valueCounter < values.length) {
+                row.cells[j].innerHTML = values[valueCounter]; // Insert value
+                valueCounter++; // Increment value counter
+            }
+        }
+    }
+    
+  document.getElementById("policy").innerHTML = data[14];
+  document.getElementById("internal-notes").innerHTML = data[15];
+  if(data[16].length>2){ AffirmLink(data[16])  };
+  if(data[7]=="INQ"){
+    document.getElementById("recovery-notes").value = "This is an Inquiry."
+  }
+  
+}
+
+
+
+//fetch a case
+function getCase() {  
+    statusUpdate("Fetching case...","#ccc","black");
+        if(document.getElementById("confirmation-number").value != ""){
+          var itn = document.getElementById("confirmation-number").value
+          google.script.run.withSuccessHandler(updatesearch).searchCase(itn)
+          clearTableData()
+        setTimeout(function(){
+          statusUpdate("Fetching reservation info...","#ccc","black");
+          google.script.run.withSuccessHandler(updateTtable).getReservationData(itn)
+        }, 2000);
+        setTimeout(function(){
+          var row = document.getElementById('cId').innerText
+          google.script.run.withSuccessHandler(claimstatus).checkClaim(row)
+        }, 10000);
+        }
+        else{
+          clearTableData()
+          var currency = document.getElementById("curr").value
+          var portal = document.getElementById("portal").value
+          if(currency =="" && portal == "" ){
+            //cleardata()
+          }
+          if(portal != "" ){
+            //cleardata()
+          google.script.run.withSuccessHandler(inputCaseInfo).getCase(portal);
+          
+          setTimeout(function(){
+            var itn = document.getElementById("itn").innerText
+            statusUpdate("Fetching reservation info...","#ccc","black");
+          google.script.run.withSuccessHandler(updateTtable).getReservationData(itn)
+        }, 6000);
+        setTimeout(function(){
+          var row = document.getElementById('cId').innerText
+          google.script.run.withSuccessHandler(claimstatus).checkClaim(row)
+        }, 10000);
+          
+          
+          }
+      }    
+    } 
+
+function claimstatus(response){
+  statusUpdate(response[0],response[1],response[2])
+
+}
+
+//puts the case info into the case info table in HTML
+function updatesearch(data){  
+  statusUpdate(data[0],"#2ea44f","white")
+    var values = data;
+    var table = document.getElementById('caseinfo')
+    // Counter for values array
+    var valueCounter = 1;
+
+    // Iterate through all rows of the table
+    for (var i = 0; i < table.rows.length; i++) {
+        var row = table.rows[i];
+
+        // Iterate through the cells of each row
+        for (var j = 0; j < row.cells.length; j++) {
+            // Insert into every other cell (even index cells, i.e., 0, 2, 4, etc.)
+            if ((i * row.cells.length + j) % 2 === 1 && valueCounter < values.length) {
+                row.cells[j].innerHTML = values[valueCounter]; // Insert value
+                valueCounter++; // Increment value counter
+            }
+        }
+    }
+    
+  document.getElementById("policy").innerHTML = data[14];
+  if(data[18].length>2){ AffirmLink(data[18])  };
+  document.getElementById("issuer-notes").value = data[15];
+  document.getElementById("rebuttal-response").value = data[16];
+  document.getElementById("internal-notes").value = data[17];
+  document.getElementById("rca").value = data[19];
+
+}
+
+function updateTtable(data){
+  statusUpdate(data[0],"#2ea44f","white")
+  var values = data;
+  console.log(data)
+  var table = document.getElementById('transInfo')
+  // Counter for values array
+  var valueCounter = 1;
+  
+  // Iterate through all rows of the table
+  for (var i = 0; i < table.rows.length; i++) {
+      var row = table.rows[i];
+
+      // Iterate through the cells of each row
+      for (var j = 0; j < row.cells.length; j++) {
+          // Insert into every other cell (even index cells, i.e., 0, 2, 4, etc.)
+          if ((i * row.cells.length + j) % 2 === 1 && valueCounter < values.length) {
+              row.cells[j].innerHTML = values[valueCounter]; // Insert value
+              valueCounter++; // Increment value counter
+          }
+      }
+  }
+  
+  
+}
+
+//funtion to insert Affirm Link
+function AffirmLink(link){
+  var portalCell = document.getElementById('alink');
+
+  // Create an <a> element
+  var hyperlink = document.createElement('a');
+
+  // Set the href attribute to the desired URL
+  hyperlink.href = "https://" + link;
+
+  // Set the text content of the link to 'affirm'
+  hyperlink.textContent = 'Affirm';
+
+  // Optional: Open the link in a new tab
+  hyperlink.target = '_blank';
+
+  // Replace the existing text with the hyperlink
+  portalCell.textContent = ''; // Clear existing text
+  portalCell.appendChild(hyperlink);
+
+}
+
+//clear screen
+function clearTableData() {
+  // Select all elements with the class 'data'
+  const dataElements = document.querySelectorAll('.data');
+
+  // Loop through each element and clear its content
+  dataElements.forEach(element => {
+    element.textContent = '';  // Clear the text inside
+  }); 
+
+  document.getElementById('rca').value = "" 
+  document.getElementById("issuer-notes").value = "";
+  document.getElementById("rebuttal-response").value = "";
+  document.getElementById("internal-notes").value = "";
+  document.getElementById('icon').innerHTML = '❌';
+  document.getElementById("Uploadstatus").innerHTML ='';
+  const outputs = document.querySelectorAll('.output');
+  document.querySelectorAll('.section-header')[6].style.backgroundColor = '#bc4749';
+  document.getElementById('confirmpage').value = '' 
+  document.getElementById('confirmpages').value = ''
+  document.getElementById('checkoutpage').value = ''
+  document.getElementById('checkoutpages').value = ''
+   
+
+  outputs.forEach((output) => {
+    output.textContent = "" 
+  });
+
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+
+  deleteButtons.forEach((button) => {
+    button.click()
+    });
+
+
+}
+
+//get trans info manually
+function getInfo(){
+  var itn = document.getElementById("itn").innerText
+  statusUpdate("Fetching reservation info...","#ccc","black");
+  google.script.run.withSuccessHandler(updateTtable).getReservationData(itn)
+
+}
+
+function Resolve(){   
+  var rca = document.getElementById("rca").value
+  var res = document.getElementById("rebuttal-response").value
+  if(rca=="" || res=="")
+  {
+    window.alert("RCA or Rebuttal Response is missing.")
+
+  }
+
+  else
+  {
+
+  
+
+  if(document.querySelectorAll('.output')[2].textContent == "Uploaded" && document.querySelector("#caseinfo > tbody:nth-child(1) > tr:nth-child(8) > td:nth-child(2)").innerText == 0)
+  {
+    var res = confirm("Resolve without updating refund amount?");
+    if(res==true){
+
+       var row = document.getElementById("cId").innerText
+        var rca = document.getElementById("rca").value
+        var res = document.getElementById("rebuttal-response").value
+        var aff = document.getElementById("issuer-notes").value
+        var notes = document.getElementById("internal-notes").value
+         
+        google.script.run.withSuccessHandler(resolvedmsg).resolveRCA(row,rca, res, aff,notes);
+
+        if(document.getElementById('confirmation-number').value == ""){
+          setTimeout(function(){
+          getCase()
+        }, 3000);
+        }
+
+        function resolvedmsg(msg){
+          statusUpdate(msg,"#2ea44f","white")
+          clearTableData()
+        }
+
+    }
+
+
+
+}
+
+else{
+        var row = document.getElementById("cId").innerText
+        var rca = document.getElementById("rca").value
+        var res = document.getElementById("rebuttal-response").value
+        var aff = document.getElementById("issuer-notes").value
+        var notes = document.getElementById("internal-notes").value
+         
+        google.script.run.withSuccessHandler(resolvedmsg).resolveRCA(row,rca, res, aff,notes);
+
+        if(document.getElementById('confirmation-number').value == ""){
+          setTimeout(function(){
+          getCase()
+        }, 3000);
+        }
+
+      
+
+function resolvedmsg(msg){
+  statusUpdate(msg,"#2ea44f","white")
+  clearTableData()
+}
+}
+} 
+}    
+
+ 
+async function saveFiles() {
+        const inputs = document.querySelectorAll('.fileInput');
+        const outputs = document.querySelectorAll('.output');
+        
+      
+        var itn = document.getElementById("itn").innerText
+        var row = document.getElementById("tId").innerText
+        if(row==""){
+          window.alert("ERROR: Transaction Info Missing!")
+        }
+        else{
+        for (let i = 0; i < inputs.length; i++) {
+          const input = inputs[i];
+          const output = outputs[i];
+          
+          if (input.files.length > 0) {
+            const file = input.files[0];
+            
+            statusUpdate("Uploading file...","#ccc","black")
+            // Check if the uploaded file is an image
+            if (!file.type.startsWith('image/')) {
+              output.textContent = 'Error: Only image files are allowed!';
+              output.classList.add('error');
+              continue;
+            }
+
+            const base64Data = await getFileData(file);
+
+            
+
+            // Call the Apps Script function to upload the file
+            google.script.run.withSuccessHandler((response) => {
+              if (response.inputId === input.id) {
+                output.textContent = response.status; // Show upload status
+                console.log(`Uploaded: ${response.name} - ${response.url}`);
+              }
+            }).uploadImageToDrive(row, itn, input.id, base64Data);
+          }
+        }
+      }
+}
+
+
+
+      // Convert file to Base64
+      function getFileData(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            resolve({
+              fileName: file.name,
+              mimeType: file.type,
+              data: event.target.result.split(',')[1] // Get Base64 data
+            });
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+      
+//send case for recovery
+function RecoveryReq(){   
+
+        var row = document.getElementById("tId").innerText
+        var selected_option = document.getElementById("recovery-details").value
+        if(row==""){
+          window.alert("ERROR: Transaction Info Missing!")
+        }
+        else{
+
+          if(selected_option=="Recovery Needed"){
+              var itn = document.getElementById("itn").innerText
+              var hotel = document.getElementById("hotel").innerText
+              var rnum = document.getElementById("rnum").innerText
+              var cin = document.querySelectorAll(".data")[19].innerText
+              var cout = document.querySelectorAll(".data")[20].innerText
+              var cbcode = document.querySelectorAll(".data")[4].innerText
+              var amt = document.querySelectorAll(".data")[8].innerText
+                
+              var notes = document.getElementById("recovery-notes").value
+              
+              google.script.run.withSuccessHandler(sentmsg).sendForRecovery(itn,rnum,amt,cin,cout,hotel,cbcode,notes);
+          }
+
+          else if(selected_option==""){
+            alert("No option selected")
+          }
+
+          else{
+
+              var itn = document.getElementById("itn").innerText
+              var hotel = document.getElementById("hotel").innerText
+              var rnum = document.getElementById("rnum").innerText
+              var cbcode = document.querySelectorAll(".data")[4].innerText
+              var amt = document.querySelectorAll(".data")[8].innerText
+              var notes = document.getElementById("recovery-notes").value
+              
+              google.script.run.withSuccessHandler(sentmsg).sendForVbException(itn,rnum,amt,selected_option,notes);
+
+          }
+        
+    function sentmsg(msg){
+    statusUpdate(msg,"#2ea44f","white")
+    document.getElementById("recovery-notes").value = ""
+    document.getElementById('icon').innerHTML = '✅'
+    }   
+}
+}
+
+const textarea = document.getElementById('issuer-notes');
+const MAX_ROWS = 30;
+const MAX_CHARS = 2500;
+textarea.addEventListener('input', function () {
+  const lines = textarea.value.split('\n');
+  const charCount = textarea.value.length;
+
+      // Check if the number of rows exceeds the limit
+      if (lines.length > MAX_ROWS) {
+        errorMsg.textContent = `Error: Maximum of ${MAX_ROWS} rows allowed.`;
+
+        // Trim to the allowed rows
+        textarea.value = lines.slice(0, MAX_ROWS).join('\n');
+      }
+      // Check if the character count exceeds the limit
+      else if (charCount > MAX_CHARS) {
+        errorMsg.textContent = `Error: Maximum of ${MAX_CHARS} characters allowed.`;
+
+        // Trim to the allowed character limit
+        textarea.value = textarea.value.slice(0, MAX_CHARS);
+      } else {
+        errorMsg.textContent = ''; // Clear error message if within limits
+      }
+    });
+   
+
+function editCell(editIcon) {
+    var currTd = editIcon.closest('td')
+    const td = editIcon.closest('td').nextElementSibling; // Get the next <td> to edit
+    const currentValue = td.textContent.trim(); // Get the current value
+
+    // Create an input field with the current value
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = currentValue;
+
+    td.innerHTML = ''; // Clear the cell content
+    td.appendChild(input);
+
+    // Replace the edit icon with a save icon
+    const saveIcon = document.createElement('span');
+    saveIcon.innerHTML = '💾'; // Save icon
+    saveIcon.classList.add('action-icons');
+    saveIcon.onclick = () => saveCell(input, td, saveIcon,currTd); // Save functionality
+
+    editIcon.replaceWith(saveIcon); // Replace the edit icon with the save icon
+  }
+
+  function saveCell(input, td, saveIcon,currTd) {
+    const newValue = input.value.trim(); // Get the input value
+    td.textContent = newValue; // Set the new value in the cell
+
+    // Create a new edit icon to replace the save icon
+    const editIcon = document.createElement('span');
+    editIcon.innerHTML = '✏️'; // Edit icon
+    editIcon.classList.add('action-icons');
+    editIcon.onclick = () => editCell(editIcon); // Reattach the event listener
+
+    saveIcon.replaceWith(editIcon);
+     // Replace the save icon with the edit icon
+     if(currTd.innerText == "Room Type✏️"){
+        var row = document.getElementById('tId').innerText
+        google.script.run.withSuccessHandler().updateRoomType(row,newValue)
+
+     }
+     else{
+        var row = document.getElementById('cId').innerText
+        google.script.run.withSuccessHandler().updateRefundAmount(row,newValue)
+     }
+     
+    
+  }
+
+//getting pending cases
+
+function getPendingCases(){
+  // Function to handle Get Pending Cases button action  
+  statusUpdate("Fetching pending cases...","#ccc","black");
+  google.script.run.withSuccessHandler(updatePending).getPendingCases()
+
+}
+
+function updatePending(data){
+
+if(data.length>0){
+document.getElementsByClassName("working-rca")[0].style.display = "block"
+document.getElementById("hide").style.display = "inline"
+document.getElementById("pendingcase").style.display = "block"
+document.getElementById("pendingmessage").style.display = "none";
+
+var table = document.getElementById("pendingcase")
+var rowCount = table.rows.length;
+for (i=1;i<rowCount;i++){
+  table.deleteRow(1)
+
+}
+for (i=0;i<data.length;i++){
+    
+    var row = document.createElement("tr");
+    for(j=0; j<data[i].length;j++){
+        var cell = document.createElement("td");
+    var cellText = document.createTextNode(data[i][j]);
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+    }
+    table.appendChild(row);
+}
+
+document.getElementsByTagName("th")[0].style.display = "none";
+var table= document.getElementById("pendingcase")
+var firstchilds = table.querySelectorAll("td:first-child")
+for(child of firstchilds) {
+child.style.display = "none"}
+
+}
+
+else{
+document.getElementById("pendingmessage").style.display = "block";
+document.getElementById("pendingcase").style.display = "none"
+}
+DeadlineReaching()
+}
+
+function DeadlineReaching(){
+var tablerows = document.getElementById('pendingcase').getElementsByTagName('tr')
+for (row=1;row<tablerows.length;row++){
+  cellToCheck = tablerows[row].getElementsByTagName('td')[5]
+  if(reviewDate(cellToCheck)<5){
+    addCautionIconToCell(cellToCheck);
+
+    }
+  }
+}
+
+function addCautionIconToCell(cell) {
+    const cautionIcon = document.createElement("span");
+    cautionIcon.className = "caution-icon";
+    cautionIcon.innerText = "⚠️"; // Unicode caution sign
+
+    cell.appendChild(cautionIcon);
+  };
+
+function reviewDate(cell){
+  var today = new Date();
+  var dueDt = new Date(cell.textContent);
+  var diffTime = Math.abs(today-dueDt);
+  var res = document.getElementById("rebuttal-response")
+  var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays
+}
+
+
+
+
+//testing paste feature
+// Select all upload boxes by class name
+    const uploadBoxes = document.querySelectorAll('.upload-box');
+
+    uploadBoxes.forEach((box) => {
+      const previewImage = box.querySelector('img');
+      const span = box.querySelector('span');
+      const deleteButton = box.querySelector('.delete-btn');
+
+      // Add paste event listener to each upload box
+      box.addEventListener('paste', (event) => {
+        const items = event.clipboardData.items;
+        for (let item of items) {
+          if (item.type.startsWith('image/')) {
+            const blob = item.getAsFile();
+            const url = URL.createObjectURL(blob);
+            previewImage.src = url;
+            previewImage.style.display = 'block';
+            span.style.display = 'none';
+            deleteButton.style.display = 'block';
+            break;
+          }
+        }
+      });
+
+      // Add click event listener to delete button
+      deleteButton.addEventListener('click', () => {
+        previewImage.src = '';
+        previewImage.style.display = 'none';
+        span.style.display = 'block';
+        deleteButton.style.display = 'none';
+      });
+    });
+
+    
+
+
+//uploading the pasted images
+
+async function saveFiles1() {
+  const uploadBoxes = document.querySelectorAll('.upload-box'); // Select all upload boxes
+  const itn = document.getElementById("itn").innerText;
+  const row = document.getElementById("tId").innerText;
+
+  if (row === "") {
+    window.alert("ERROR: Transaction Info Missing!");
+    return;
+  }
+
+  for (let box of uploadBoxes) {
+    const img = box.querySelector('img'); // Get the preview image
+    const output = box.nextElementSibling; // Get the output div (next sibling)
+
+    if (img.src.startsWith("blob")) {
+      statusUpdate("Uploading images...", "#ccc", "black");
+
+      // Convert the pasted image (Blob URL) to Base64
+      const base64Data = await getBase64FromImage(img.src);
+
+      // Call the Apps Script function to upload the image
+      google.script.run.withSuccessHandler((response) => {
+        output.textContent = response.status; // Show upload status
+        console.log(`Uploaded: ${response.name} - ${response.url}`);
+      }).uploadImageToDrive(row, itn, box.id, base64Data);
+    }
+  }
+}
+
+// Convert an image (Blob URL) to Base64
+async function getBase64FromImage(imageUrl) {
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(reader.result.split(',')[1]); // Get only Base64 part
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+function getBookingData(){
+  const row = document.getElementById("cId").innerText;
+  google.script.run.withSuccessHandler((response) => { 
+    
+    const textarea = document.getElementById('rebuttal-response');
+      // Get the current cursor position
+    const cursorPosition = textarea.selectionStart;
+
+    // Get the existing text
+    const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+    const textAfterCursor = textarea.value.substring(cursorPosition);
+
+    // Insert the canned response at the cursor position
+    textarea.value = textBeforeCursor + response + textAfterCursor;
+
+    // Set the cursor position after the inserted text
+    const newCursorPosition = cursorPosition + cannedResponse.length;
+    textarea.setSelectionRange(newCursorPosition, newCursorPosition);
+
+    // Focus back on the textarea
+    textarea.focus();
+
+  }).createCannedRes(row);
+
+}
+
+function getCount(){
+  statusUpdate("Fetching queue stats...", "#ccc", "black");
+  google.script.run.withSuccessHandler((response) => { 
+  const spans = document.querySelectorAll('.queue-status span');
+  spans[0].textContent = response.myCount;
+  spans[1].textContent = response.myFraud;
+  spans[2].textContent = response.priority;
+  spans[3].textContent = response.affirm;
+  spans[4].textContent = response.amex;
+  spans[5].textContent = response.braintree;
+  spans[6].textContent = response.chase;
+  }).agentCount();
+
+}
+
+function hidePendingTable(){
+  document.getElementsByClassName("working-rca")[0].style.display = "none"
+  document.getElementById("hide").style.display = "none"
+}
+
+//upload confirmation page and checkout pages
+
+async function uploadFiles() {
+        const statusEl = document.getElementById("Uploadstatus");
+        
+        const getFileContent = (file) => {
+          return new Promise((resolve, reject) => {
+            statusEl.innerHTML = 'Uploading... <span class="spinner"></span>'
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        };
+
+        const prepareFile = async (file) => ({
+          name: file.name,
+          mimeType: file.type,
+          content: await getFileContent(file)
+        });
+        var itn = document.getElementById("itn").innerText
+        const confirmpage = document.getElementById("confirmpage").files[0];
+        const checkoutpage = document.getElementById("checkoutpage").files[0];
+        const confirmpages = document.getElementById("confirmpages").files[0];
+        const checkoutpages = document.getElementById("checkoutpages").files[0];
+        const wexandrefund = document.getElementById("wexandrefund").files[0];
+        const accproof = document.getElementById("accproof").files[0];
+
+        if (!confirmpage || !checkoutpage) {
+          alert("Confirmation and Checkout pages are required!");
+          return;
+        }
+
+        const formData = {
+          itn: itn,
+          confirmpage: await prepareFile(confirmpage),
+          checkoutpage: await prepareFile(checkoutpage),
+          confirmpages: confirmpages ? await prepareFile(confirmpages) : null,
+          checkoutpages: checkoutpages ? await prepareFile(checkoutpages) : null,
+          wexandrefund: wexandrefund ? await prepareFile(wexandrefund) : null,
+          accproof: accproof ? await prepareFile(accproof) : null,
+        };
+
+        google.script.run.withSuccessHandler((res) => {
+          statusEl.innerHTML = `<strong>${res.message}</strong><br>Uploaded:<br>` + res.uploaded.join('<br>');
+          document.querySelectorAll('.section-header')[6].style.backgroundColor = '#9498b8'
+          document.getElementById('confirmpage').value = '' 
+          document.getElementById('confirmpages').value = ''
+          document.getElementById('checkoutpage').value = ''
+          document.getElementById('checkoutpages').value = ''
+          document.getElementById('wexandrefund').value = ''
+          document.getElementById('accproof').value = ''
+        }).uploadAllFiles(formData);
+      }
+
+  let cannedResponses = [];
+
+  function showCannedModal() {
+    document.getElementById("cannedModal").style.display = "block";
+    fetchCannedResponses();
+  }
+
+  function closeCannedModal() {
+    document.getElementById("cannedModal").style.display = "none";
+  }
+
+  function fetchCannedResponses() {
+    google.script.run.withSuccessHandler((data) => {
+      cannedResponses = data;
+      const dropdown = document.getElementById("savedResList");
+      dropdown.innerHTML = `<option value="">-- Select --</option>`;
+      cannedResponses.forEach(r => {
+        let opt = document.createElement("option");
+        opt.value = r.name;
+        opt.textContent = r.name;
+        dropdown.appendChild(opt);
+      });
+    }).getCannedResponses();
+  }
+
+  function loadCannedResponse() {
+    const name = document.getElementById("responseList").value;
+    const match = cannedResponses.find(r => r.name === name);
+    if (match) {
+      document.getElementById("responseBox").value = match.response;
+      document.getElementById("responseName").value = match.name;
+    }
+  }
+
+  function saveCanned() {
+    const name = document.getElementById("responseName").value.trim();
+    const response = document.getElementById("responseBox").value.trim();
+    if (!name || !response) {
+      alert("Please enter both name and response");
+      return;
+    }
+    google.script.run.withSuccessHandler((msg) => {
+      alert("Response " + msg);
+      fetchCannedResponses();
+    }).saveCannedResponse(name, response);
+  }
+
+  function clearCanned(){
+    document.getElementById("responseList").value = ""
+    document.getElementById("responseBox").value = ""
+    document.getElementById("responseName").value = ""
+    
+  }
+
+function insertCanned(){
+  var res = document.getElementById("rebuttal-response")
+  const cursorPosition = res.selectionStart;
+  // Get the existing text
+  const textBeforeCursor = res.value.substring(0, cursorPosition);
+  const textAfterCursor = res.value.substring(cursorPosition);
+  var response = document.getElementById("responseBox").value
+
+  res.value = textBeforeCursor + response + textAfterCursor
+
+}
+
+  </script>
+
+End of file 2
+ 
+BEGINNING OF FILE 3 MAINRCAPAGE.HTML
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>RCA Manager v2</title>
+  <?!= include('Stylesheet'); ?>
+  <?!= include('RCAResponse'); ?>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>RCA Manager v2</h1>
+    <p id="status"></p>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Left Section: Collapsible Sections with Dropdowns and Input -->
+    <div class="left-section">
+      <div class="section-header" onclick="toggleSection('section1')">Get Case</div>
+      <div class="section-content" id="section1">
+        <!-- Two Dropdown menus side by side -->
+        <select name="curr" id="curr" style="display:none">
+          <option value="">Select Currency</option>
+      <option value="USD">USD</option>
+    <option value="Non USD">Non USD</option>
+        </select>
+        <select name="portal" id="portal">
+      <option value="">Select Portal</option>
+      <option value="Amex">Amex</option>
+      <option value="Affirm">Affirm</option>
+  <option value="Braintree">Braintree</option>
+  <option value="Chase">Chase</option>  
+  <option value="Priority">Priority</option>
+</select>   
+        <br><br>
+        <!-- One line input text box for confirmation number -->
+        <input type="text" id="confirmation-number" placeholder="Enter ITN">
+        <br><br>
+        <!-- Button to get the case -->
+        <button onclick="getCase()">Get Case</button>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section2')">Case Info</div>
+      <div class="section-content" id="section2">
+        <table id="caseinfo">
+<tr>
+            <td class="label">CRow</td>
+            <td class="data" id="cId"></td>
+          </tr>
+          <tr>
+            <td class="label">Case ID</td>
+            <td class="data" id="caseid" onclick="copyToClipboard('caseid')"></td>
+          </tr>
+          <tr>
+            <td class="label" >Merchant Order #</td>
+            <td class="data"  id="itn" onclick="copyToClipboard('itn')"></td>
+          </tr>
+          <tr>
+            <td class="label">Reservation #</td>
+            <td class="data" id="rnum" onclick="copyToClipboard('rnum')"></td>
+          </tr>
+          <tr>
+            <td class="label">Reason Code</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Dispute Amount</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Dispute Type</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Refund Amount<span class="action-icons" onclick="editCell(this)">✏️</span></td>
+            <td class="data"></td>
+          </tr>
+          
+            <td class="label">Transaction Amount</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Currency</td>
+            <td class="data"></td>
+          </tr>
+          
+          <tr>
+            <td class="label">Dispute Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Due Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Portal</td>
+            <td class="data" id="alink"></td>
+          </tr>
+          <tr>
+            <td class="data" id="policy" colspan="2"></td>
+          </tr>
+          
+        </table>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section3')">Transaction Info</div>
+      <div class="section-content" id="section3">
+        <button onclick="getInfo()">Get Info</button>
+        <table id="transInfo">
+  <tr>
+            <td class="label">TRow</td>
+            <td class="data" id="tId"></td>
+          </tr>
+          <tr>
+            <td class="label">Merchant Order #</td>
+            <td class="data" id="itn2" onclick="copyToClipboard('itn2')"></td>
+          </tr>
+          <tr>
+            <td class="label">Booking Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label" style="display:none">Hotel Name</td>
+            <td class="data" id="hotel" onclick="copyToClipboard('hotel')" style="display:none"></td>
+          </tr>
+          <tr>
+            <td class="label" style="display:none">Guest Name</td>
+            <td class="data" style="display:none"></td>
+          </tr>
+          <tr>
+            <td class="label" >Check In</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label" style="display:none">Check Out</td>
+            <td class="data" style="display:none"></td>
+          </tr>
+          <tr>
+            <td class="label" style="display:none">Customer Email</td>
+            <td class="data" style="display:none"></td>
+          </tr>
+          <tr>
+          <td class="label">Room Type<span class="action-icons" onclick="editCell(this)">✏️</span></td>
+            <td class="data"></td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section4')">Canned Response</div>
+      <div class="section-content" id="section4">
+        <button onclick="getBookingData()">Booking Data</button><br>
+        <button onclick="addCannedResponse('The customer was issued a full refund on [date] in the amount [amount currency] with ARN # [ARN]')">Fully Refunded</button><br>
+        <button onclick="addCannedResponse('The reservation was made online through our website by the cardholder and all information was entered by the cardholder including check in/check out dates, hotel name, location, city, state, country, room types, number of persons booked, charges. The cardholder booked the reservation having first agreed to the full transaction amount, cancellation policy, and clicked the box agreeing to the terms and conditions (T&C) at the time of booking before their card was charged and the card holder was sent confirmation mail in regards to the same.')">Online Reservation</button><br>
+        <button onclick="addCannedResponse('The guest had agreed to the reservation as well as the terms and conditions of the reservations prior to accepting/confirming his/her payment to us. In addition, upon completion of the booking, an electronic copy of the itinerary was sent via email to the email address that was provided during the booking process. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents’ supporting that cardholder is not due a credit.')">Call Center</button><br>
+        <button onclick="addCannedResponse('No contact was received via Priceline customer service phone line or via Travel Agent site, as required per the attached cancellation policy (T&C Sec 28) prior to filing a chargeback.')">No Contact</button><br>
+        <button onclick="addCannedResponse('Please be advised that Travel Agent retains the right to cancel any travel reservation in the event of a chargeback related to that reservation. Cardholder\'s chargeback is an erroneous attempt to circumvent contract the customer entered when agreeing to the Terms and Conditions (T&C) #6 before his card was charged. Priceline retains the right to dispute any chargeback that it believes is improper and retains the right to investigate and rebut any such chargeback claims and to recover costs of such chargeback claims from the cardholder.')">Fraud No Penalty</button><br> 
+        <button onclick="addCannedResponse('In order to secure the waiver, we contacted the hotel on XXXXXX CST and spoke to XXXXXX from the XXXXXX for the refund but the same was denied and our card was charged. No refund is due.')">Waiver Denied</button><br> 
+        
+        <button onclick="showCannedModal()">📋 Open Canned Responses</button>
+        <!-- Canned Response Modal -->
+<div id="cannedModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; border:1px solid #ccc; padding:15px; z-index:1000; width:350px; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+  <h3 style="margin-top:0;">Canned Responses</h3>
+  <input list="savedResList" id="responseList" onchange="loadCannedResponse()" style="width:100%; margin-bottom:8px;">
+  <datalist id="savedResList">
+    </datalist>
+  </input>
+  <textarea id="responseBox" placeholder="Type your response..." style="width:100%; height:80px;"></textarea>
+  <input type="text" id="responseName" placeholder="Response name" style="width:100%; margin-top:8px;">
+  <button onclick="saveCanned()" style="margin-top:8px;">💾 Save / Update</button>
+  <button onclick="insertCanned()" style="margin-top:8px;">Insert</button>
+  <button onclick="clearCanned()" style="margin-top:8px;">Clear</button>
+  <button onclick="closeCannedModal()" style="margin-top:8px; float:right;">❌ Close</button>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Middle Section: Resizable Text Boxes and "Get Pending Cases" button -->
+    <div class="middle-section">
+      <div class="rca-section">
+          <input list="rcas" id="rca" onchange="fetchResponse()" style="width:340px" ><input type="checkbox" id="getRes?">
+          <datalist id="rcas">
+            <option value="">Select RCA</option>
+            <option value="Customer - Cancel policy dispute/Non Refundable">Customer - Cancel policy dispute/Non Refundable</option>
+            <option value="Risk - Fraudulent Transaction">Risk - Fraudulent Transaction</option>
+            <option value="Customer - Cancel policy dispute">Customer - Cancel policy dispute</option>
+            <option value="No Reservation (No Wex)">No Reservation (No Wex)</option>
+            <option value="Customer - Taxes and Fees">Customer - Taxes and Fees</option>
+            <option value="Manual Response">Manual Response</option>
+            <option value="Customer - Cancel policy dispute (No Contact / Confirmed)">Customer - Cancel policy dispute (No Contact / Confirmed)</option>
+            <option value="Chargeback Accepted">Chargeback Accepted</option>
+            <option value="No Reservation (with WEX)">No Reservation (with WEX)</option>
+            <option value="Cancellation/Tax & Recovery (attempt to cancel)">Cancellation/Tax & Recovery (attempt to cancel)</option>
+            <option value="Duplicate bill w/ GAR ARN">Duplicate bill w/ GAR ARN</option>
+            <option value="Hotel - Unsatisfactory">Hotel - Unsatisfactory</option>
+            <option value="No Reservation (Cancelled)">No Reservation (Cancelled)</option>
+            <option value="Customer - Cancel Penalty Dispute/Early Checkout">Customer - Cancel Penalty Dispute/Early Checkout</option>
+            <option value="Hotel - Hotel Billed Direct (Wex not charged/Direct Bill)">Hotel - Hotel Billed Direct (Wex not charged/Direct Bill)</option>
+            <option value="Cancellation/Tax & Recovery (No attempt to cancel)">Cancellation/Tax & Recovery (No attempt to cancel)</option>
+            <option value="Customer - Charge not recognized">Customer - Charge not recognized</option>
+            <option value="Hotel - Hotel revealed rate">Hotel - Hotel revealed rate</option>
+            <option value="Hotel - Hotel Billed Direct">Hotel - Hotel Billed Direct</option>
+            <option value="Duplicate bill w/ NON GAR ARN">Duplicate bill w/ NON GAR ARN</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Reason code 53 without affidavit">Reason code 53 without affidavit</option>
+            <option value="Customer - Currency">Customer - Currency</option>
+            <option value="Customer - Cancel policy dispute/No Show">Customer - Cancel policy dispute/No Show</option>
+            <option value="Customer - Unable to check in/Customer Issue (Age, CC)">Customer - Unable to check in/Customer Issue (Age, CC)</option>
+            
+            
+            <option value="Customer - Booking Error">Customer - Booking Error</option>
+            <option value="Hotel - Room Type Not Available">Hotel - Room Type Not Available</option>
+            <option value="Other - Chip liability shift (fraud)">Other - Chip liability shift (fraud)</option>
+            
+            <option value="Service - Cancel Not Performed">Service - Cancel Not Performed</option>
+            <option value="Risk - Fraudulent Transaction (w/ Contact)">Risk - Fraudulent Transaction (w/ Contact)</option>
+            
+            <option value="Sales - Data Entry Issue (Online Reservation Only)">Sales - Data Entry Issue (Online Reservation Only)</option>
+            <option value="Pending">Pending</option>
+          </datalist>
+            </input>
+            
+            </div>
+
+
+      <label for="issuer-notes">Issuer Notes:</label>
+      <textarea id="issuer-notes" rows="4" placeholder="Enter issuer notes..." class="resizable"></textarea>
+      <div class="error" id="errorMsg"></div>
+
+      <label for="rebuttal-response" >Rebuttal Response:</label>
+      <textarea id="rebuttal-response" rows="15" placeholder="Enter rebuttal response..." class="resizable"></textarea>
+
+      <label for="internal-notes"  >Internal Notes:</label>
+      <textarea id="internal-notes" rows="2" placeholder="Enter internal notes..." class="resizable"></textarea>
+
+<div class="buttons-section">
+<button onclick="Resolve()">Resolve</button>
+    
+
+      <!-- "Get Pending Cases" button after Internal Notes -->
+      <button onclick="getPendingCases()">Get Pending Cases</button>
+      <button style="display:none" id="hide" onclick="hidePendingTable()">Hide Pending Cases</button>
+    </div><div class="working-rca" style="display:none;padding:10px 2px 2px 2px">
+    <label style="display:none" id="pendingmessage"> No Pending cases!</label>
+    <table id="pendingcase" style="display:none">
+      <tr>
+  <th class="row-number">Row</th>
+  <th style="width:100px">Case Id</th>
+  <th>Merchant Order #</th>
+  <th style="width:150px">Reason Code</th>
+  <th>Received Date</th> 
+  <th>Due Date</th>
+  <th style="width:400px">Internal Notes</th>
+  </tr>
+      </table>
+
+      </div>
+      
+    </div>
+
+    <!-- Right Section: Uploads, Recovery, and Queue Status -->
+    <div class="right-section">
+
+      <!-- First Subsection: Uploads with Save Button -->
+      <div class="uploads-section">
+        <div class="section-header" onclick="toggleSection('section5')">Upload Files</div>
+      <div class="section-content" id="section5">
+          <label class="labelupload">Hotel Billed Merchant</label><br>
+          <div class="upload-box" id="wex">
+            <span>Paste image here</span><button class="delete-btn">Dlt</button>
+            <img alt="Preview">
+
+          </div>
+          <div class="output"></div>
+          <label class="labelupload">Accertify Index Score</label><br>
+          <div class="upload-box" id="ais">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+          </div>
+          <div class="output"></div>
+          <label class="labelupload">Refund screenshot</label><br>
+          <div class="upload-box" id="rfs">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+
+          </div>
+          <div class="output"></div>
+          <label>Customer Contact</label><br>
+          <div class="upload-box" id="ccontact">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+
+          </div>
+          <div class="output"></div>
+          <label>Proof of Non Fraud</label><br>
+          <div class="upload-box" id="nonfraud">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+          </div>
+          <div class="output"></div>
+
+          <label>Proof of Non Fraud #1</label><br>
+          <div class="upload-box" id="nonfraud1">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+
+          </div>
+          <div class="output"></div>
+
+          <label>Proof of Non Fraud #2</label><br>
+          <div class="upload-box" id="nonfraud2">
+            <span>Paste image here</span>
+            <img alt="Preview"><button class="delete-btn">Dlt</button>
+            <div class="output"></div>
+          </div><br>
+
+          <button id="upload" onclick="saveFiles1()">Save</button>
+        </div>
+      </div>
+
+      <!-- Second Subsection: Recovery with Resizable Textbox and Submit Button -->
+      <div class="section-header" onclick="toggleSection('section6')">Recovery</div>
+      <div class="section-content" id="section6">
+          <textarea id="recovery-notes" rows="4" cols="35" placeholder="Enter recovery notes..." class="resizable"></textarea><br>
+          <select id="recovery-details" >
+          <option value="">Select one</option>
+          <option value="Recovery Needed">Recovery Needed</option>
+          <option value="Outside Penalty">Outside Penalty</option>
+      <option value="Denied Already">Denied Already</option>
+          
+          <option value="Waived Already">Waived Already</option>
+          <option value="Partially Waived Already">Partially Waived Already</option>
+          </select>
+          <button onclick="RecoveryReq()">Submit</button><span id="icon">❌</span>
+        </div>
+      
+
+      <!-- Third Subsection: Uploading checkout and confirmation -->
+      <div class='pdf-uploads'>
+      <div class="section-header" onclick="toggleSection('section8')">PDF Files Upload</div>
+      <div class="section-content" id="section8">
+          <label>Confirmation Page(Required):</label><br>
+          <input type="file" id="confirmpage" accept="application/pdf" required><br>
+
+          <label>CheckOut Page(Required):</label><br>
+          <input type="file" id="checkoutpage" accept="application/pdf" required><br>
+
+          <label>Duplicate Confirmation Pages:</label><br>
+          <input type="file" id="confirmpages" accept="application/pdf" ><br>
+
+          <label>Duplicate CheckOut Page:</label><br>
+          <input type="file" id="checkoutpages" accept="application/pdf" ><br>
+          <label>Duplicate WEX and Refund:</label><br>
+          <input type="file" id="wexandrefund" accept="application/pdf" ><br>
+          <label>Accertify Pdf:</label><br>
+          <input type="file" id="accproof" accept="application/pdf" ><br>
+          <br>
+          <button id='buttonPDF' onclick="uploadFiles()">Upload All</button>
+          <div class="success-msg">
+            <p id="Uploadstatus"></p>
+          </div>
+       </div>
+       </div>
+
+      <!-- Fourth Subsection: Queue Status with 4 Labels and Values -->
+      <div class="queue-status-section">
+        <div class="section-header" onclick="toggleSection('section7')">Queue Stats</div>
+      <div class="section-content" id="section7">
+        <button onclick="getCount()">Get Stats</button>
+          <div class="queue-status">
+            <div><strong>All RCA:</strong> <span></span></div>
+            <div><strong>Fraud RCA:</strong> <span></span></div>
+            <div><strong>Priority:</strong> <span></span></div>
+            <div><strong>Affirm:</strong> <span></span></div>
+            <div><strong>Amex:</strong> <span></span></div>            
+            <div><strong>BrainTree:</strong> <span></span></div>
+            <div><strong>Chase:</strong> <span></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+<?!= include('JavaScript'); ?>
+</body>
+
+</html>
+
+End of file 3
+ 
+BEGINNING OF FILE 4 POPUP.html
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body { font-family: Arial; padding: 10px; }
+      textarea { width: 100%; height: 100px; }
+      select, input { width: 100%; margin-top: 10px; }
+    </style>
+  </head>
+  <body>
+    <h3>Canned Responses</h3>
+    <select id="responseList" onchange="loadResponse()">
+      <option value="">-- Select a response --</option>
+    </select>
+    <textarea id="responseBox" placeholder="Type or view your response here..."></textarea>
+    <input type="text" id="responseName" placeholder="Enter name for response">
+    <button onclick="save()">Save / Update</button>
+
+    <script>
+      let responses = [];
+
+      function loadResponse() {
+        const name = document.getElementById('responseList').value;
+        const match = responses.find(r => r.name === name);
+        if (match) {
+          document.getElementById('responseBox').value = match.response;
+          document.getElementById('responseName').value = match.name;
+        }
+      }
+
+      function save() {
+        const name = document.getElementById('responseName').value;
+        const response = document.getElementById('responseBox').value;
+        if (!name || !response) {
+          alert("Please fill both fields");
+          return;
+        }
+        google.script.run
+          .withSuccessHandler((msg) => {
+            alert("Response " + msg);
+            fetchResponses(); // Refresh list
+          })
+          .saveResponse(name, response);
+      }
+
+      function fetchResponses() {
+        google.script.run.withSuccessHandler((data) => {
+          responses = data;
+          const select = document.getElementById("responseList");
+          select.innerHTML = '<option value="">-- Select a response --</option>';
+          responses.forEach(r => {
+            const opt = document.createElement("option");
+            opt.value = r.name;
+            opt.textContent = r.name;
+            select.appendChild(opt);
+          });
+        }).getResponses();
+      }
+
+      fetchResponses(); // Load on start
+    </script>
+  </body>
+</html>
+
+
+
+END OF FILE 4
+
+ 
+Beginning of file 5 rcaresponse.html
+<script>
+
+function fetchResponse(){
+  var rca = document.getElementById("rca").value
+  var res = document.getElementById("rebuttal-response")
+  const cursorPosition = res.selectionStart;
+  var checkbox = document.getElementById("getRes?").checked
+    // Get the existing text
+    const textBeforeCursor = res.value.substring(0, cursorPosition);
+    const textAfterCursor = res.value.substring(cursorPosition);
+
+    // Insert the canned response at the cursor position
+    
+  if(checkbox){
+switch (rca){
+
+case  "Customer - Cancel policy dispute/Non Refundable":res.value = textBeforeCursor + "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. At the time the booking was made, the reservation was non-refundable. Cardholder's chargeback is an erroneous attempt to circumvent the cancellation policy and breach the contract the customer entered when agreeing to the Terms and Conditions (T&C) before his card was charged. Cardholder owes Priceline Partner Solutions for the reservation. A reversal is due. Please see included documents supporting that cardholder is not due a credit.\n\n" + textAfterCursor; break;
+
+case  "Risk - Fraudulent Transaction":res.value  = textBeforeCursor +  "The following transaction is not fraudulent as stated. The attached documents indicate the cardholder participated in the transaction. Also, we are a Card Not Present (CNP) environment. All of our sales purchase are made by the customer either directly through our secure online platform or via our official call center, where all transactions are handled through verified procedures. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. The attached documents indicate the cardholder participated in the transaction; note the AVS and CVV attached. The payment for this reservation processed in the United States and appeared on statement as 'HTL*_______'. Based on this, we confirm that the transaction was initiated and authorized by the cardholder and request that the chargeback be reversed. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. The attached documents indicate the cardholder participated in the transaction. The cardholder has made no good faith effort in resolving any issues with this charge with Priceline Partner Solutions prior to filing the dispute.\n\n" + textAfterCursor; break;
+
+case  "Customer - Cancel policy dispute":res.value  = textBeforeCursor +  "Cardholder claiming credit is owed on a reservation. Customer tried contacting Priceline Partner Solutions for cancellation when the reservation was inside penalty or canceled the reservation inside of cancellation policy. See attached receipt/confirmation sent to the customer at the time of booking detailing the cancellation policy. Per cancellation policy and Priceline Partner Solutions Terms and Conditions, which the customer agreed to at the time of booking, no refund is due. If you do not cancel before the cancellation policy period applicable to the reservation, the customer will be subject to a charge equal to applicable nightly rates, tax recovery charges, and service fees. There are no refunds for no-shows or early checkouts. The hotel/ supplier has billed Priceline Partner Solutions, and we have paid the hotel/supplier. The customer owes Priceline Partner Solutions for the reservation.\n\n" + textAfterCursor; break;
+
+case  "No Reservation (No Wex)":res.value  = textBeforeCursor +  "Reservation was available at the time of check-in. No cancellation was received via the Priceline Partner Solutions customer service phone line or via the Travel Agent site, as required per the cancellation policy of the reservation. All policies agreed to and sent to guests after the completion of booking process. Guest failed to process cancellation based on agreed-upon policy. See attached confirmation of booking. The supplier billed Priceline for the stay, and Priceline billed the guest. Reversal is required.\n\n" + textAfterCursor; break;
+
+case  "Customer - Taxes and Fees":res.value  = textBeforeCursor +  "The customer agreed to and confirmed acceptance of the full transaction price before providing their card information to book the room. The customer is disputing the amount of taxes and service fees. Per Terms and Conditions (T&C), the tax recovery charge is a recovery of the estimated taxes that we pay to the hotel for our customers' reservations. We also collect a service fee for facilitating reservations. These facts are listed in the T&C which the customer agreed to before their card was charged. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n\n"+textAfterCursor; break;
+
+case  "Manual Response":res.value = ""; break;
+
+case  "Customer - Cancel policy dispute (No Contact / Confirmed)":res.value  = textBeforeCursor +  "NO cancellation was received via Priceline customer service via any means - call or email, as required per the attached cancellation policy (T&C Sec 36). The reservation is still active on our records. All policies are agreed to and sent to the guest during checkout. Guest failed to process a cancellation based on agreed-upon policy. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. See attached confirmation of booking supporting that cardholder is not due a credit.\n\n" + textAfterCursor; break;
+
+case  "Chargeback Accepted":res.value = "Chargeback has been accepted."; break;
+
+case  "No Reservation (with WEX)":res.value  = textBeforeCursor +  "Reservation was available at the hotel for check-in. No cancellation was received via the Priceline Partner Solutions customer service phone line or via the Travel Agent site, as required per the cancellation policy of the reservation. There should be no charges from the hotel directly for this reservation. Please see the attached document showing the hotel has billed Priceline Partner Solutions for the reservation, and we have paid the hotel / supplier. The customer agreed to the terms of the booking before their card was charged. Our terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel; we are merely the facilitator of the hotel booking process. The Cardholder owes Priceline Partner Solutions for this reservation. Please see attached receipt/confirmation sent at the time of booking.\n\n" + textAfterCursor; break;
+
+case  "Cancellation/Tax & Recovery (attempt to cancel)":res.value  = textBeforeCursor +  "The customer reviewed and accepted both the cancellation policy and the full transaction amount prior to entering their payment information and completing the booking. They are now disputing the charge, claiming the cancellation was due to dissatisfaction with taxes and service fees. However, as clearly outlined in the Terms and Conditions (T&C) accepted at the time of purchase:\n\nTax Recovery Charge: This charge represents the estimated taxes that we collect and remit directly to the hotel or affiliated supplier on the customer’s behalf. It ensures compliance with local tax requirements related to the reservation.\n\nService Fee: This is a nonrefundable fee that covers the administrative and operational costs of facilitating the reservation with our affiliate or supplier. It is clearly disclosed during the booking process.\n\nThese charges, along with the cancellation policy, were fully presented and accepted prior to the cardholder’s payment authorization. As such, the transaction was processed in accordance with the agreed-upon terms.\n\n" + textAfterCursor; break;
+
+case  "Duplicate bill w/ GAR ARN":res.value  = textBeforeCursor +  "Please see the included purchase details showing that the Cardholder purchased the same item through different transactions. Cardholder booked these reservations and agreed to balance, cancellation policy, terms and condition. The Cardholder is provided with the confirmed booking details before completing the purchase. Please see attached receipt/confirmation sent at the time of booking.\n\n"+textAfterCursor; break;
+
+case  "Hotel - Unsatisfactory":res.value  = textBeforeCursor +  "The cardholder is claiming to be dissatisfied with the services provided at the hotel. This reservation is non-refundable once services are rendered. The customer agreed to the terms of the booking before their card was charged. Per the additional terms under Travel Agency Agreement, Section 17 states that because of the nature of Travel Agent's Services, we are not in control of the quality of rooms provided by any particular hotel at any time. Travel Agent has no control over, and makes no representations regarding, the quality, safety or legality of the products and services offered, food provided, accommodations provided, and/or the truth or accuracy of the listings or the ability of the vendors to offer services, nor do we make any guarantee that the lodging establishment is not undergoing any renovation. The terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel; Priceline Partner Solutions is merely the facilitator of the hotel booking process. Per terms and conditions as well as the cancellation policy emailed to the customer at the time of booking, the customer is due no refund. The hotel/ supplier has billed Priceline Partner Solutions, and we have paid the hotel/supplier.\n\n" + textAfterCursor; break;
+
+case  "No Reservation (Cancelled)":res.value  = textBeforeCursor +  "The reservation was confirmed and scheduled for [check-in date]. The customer voluntarily cancelled the reservation on [cancellation date], prior to the check-in date. As per our stated cancellation policy, [we can add cancellation policy — e.g., “reservations cancelled within X days of check-in are non-refundable”]. Since the customer chose to cancel the reservation, the service which was supposed to be available, couldn't /wouldn't be rendered and hence this chargeback is not valid under the reason code “services not rendered” Attached are the reservation confirmation, cancellation request from the customer, and our cancellation policy as presented at the time of booking. We respectfully request that this chargeback be reversed.\n\n" + textAfterCursor; break;
+
+case  "Customer - Cancel Penalty Dispute/Early Checkout":res.value  = textBeforeCursor + "Cardholder is disputing unused nights. The cardholder checked out early, but this does not change the terms they agreed to at the time of booking. The reservation was non-refundable, and our policy clearly states that no refunds are given for unused nights. The full charge remains valid because the room was held for the entire duration of the original reservation, making it unavailable to other guests, and the rate was based on the full length of stay selected at the time of booking. Per terms and conditions as well as the cancellation policy emailed to the customer at the time of booking, Cardholder is not due a refund.\n\n" + textAfterCursor; break;
+
+case  "Customer - No Receipt":res.value  = textBeforeCursor +  "Customer made a hotel reservation with Priceline Partner Solutions and customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents of the reservation.\n\n" + textAfterCursor; break;
+
+case  "Hotel - Hotel Billed Direct (Wex not charged/Direct Bill)":res.value  = textBeforeCursor +  "Per the affidavit, the customer claims to have been direct billed by the hotel in error. Our establishment did not make this charge. This charge should be disputed with the establishment that made them. The customer agreed to the terms of the booking before their card was charged. Our terms state that Priceline Partner Solutions.com is not responsible for the services provided at the hotel. Priceline Partner Solutions.com is only the facilitator of the hotel booking process. The customer owes Priceline Partner Solutions for this reservation. Please see attached receipt/confirmation sent at the time of booking.\n\n" + textAfterCursor; break;
+
+case  "Cancellation/Tax & Recovery (No attempt to cancel)":res.value = textBeforeCursor +  "The customer completed the booking after reviewing and accepting both the cancellation policy and the full transaction amount prior to entering their payment information. They are now disputing the charge, citing dissatisfaction with taxes and service fees, despite having neither canceled the reservation nor contacted us to request a cancellation. There is no record of any cancellation initiated by the customer.\n\nThe charges in question were fully disclosed at the time of booking and accepted under the Terms and Conditions (T&C): \n\nTax Recovery Charge: This charge represents the estimated taxes that we collect and remit directly to the hotel or affiliated supplier on the customer’s behalf. It ensures compliance with local tax obligations related to the reservation. \n\nService Fee: This is a non-refundable fee that covers the administrative and operational costs of securing and managing the reservation with our affiliate or supplier. It was clearly itemized during the checkout process. \n\nThese fees, along with the total transaction amount, were acknowledged and approved by the customer prior to confirming the reservation. As there is no record of a cancellation, and the reservation was held as booked, the charge remains valid and consistent with the agreed-upon terms.\n\n" + textAfterCursor; break;
+
+case  "Customer - Charge not recognized":res.value  = textBeforeCursor +  "The following transaction is not fraudulent as stated. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. The attached documents indicate the cardholder participated in the transaction; note the AVS and CVV attached. The payment for this reservation processed in the United States and appeared on statement as 'cci*Hotel Res'.\n\n" + textAfterCursor; break;
+
+case  "Hotel - Hotel revealed rate":res.value  = textBeforeCursor +  "The hotel has revealed Priceline Partner Solutions's net rates to the customer in error. The hotel's receipt provided to the customer in error shows wholesale rates between Priceline Partner Solutions and the hotel. The customer agreed to the retail Priceline Partner Solutions rate during the booking process with us and agreed to and confirmed acceptance of the full transaction price including the Tax Recovery Charges & Service Fees before providing their card information to book the room. Per Terms and Conditions (T&C), the tax recovery charge is a recovery of the estimated taxes that we pay to the hotel for our customers' reservations. We also collect a service fee for facilitating reservations. These facts are listed in the T&C which the customer agreed to before their card was charged. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n" + textAfterCursor; break;
+
+case  "Hotel - Hotel Billed Direct":res.value  = textBeforeCursor +  "Per the affidavit, the customer claims to have been direct billed by the hotel in error. Our establishment did not make this charge. This charge should be disputed with the establishment that made them. The customer agreed to the terms of the booking before their card was charged. Our terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel. Priceline Partner Solutions is only the facilitator of the hotel booking process. Priceline Partner Solutions has paid for the reservation in advance and it was available at the time of check in. The customer owes Priceline Partner Solutions for this reservation. Please see attached receipt/confirmation sent at the time of booking.\n" + textAfterCursor; break;
+
+case  "Duplicate bill w/ NON GAR ARN":res.value  = textBeforeCursor +  "Please be advised the ARN# listed on the affidavit does not belong to Priceline Partner Solutions. The customer claims to have been direct billed by the hotel in error. Our establishment did not make this charge. These charges should be disputed with the establishment that made them. The customer agreed to Priceline Partner Solutions's terms of the booking before we charged their card. Our terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel. Priceline Partner Solutions is merely the facilitator of the hotel booking process. Please see attached receipt/confirmation sent at the time of booking. There should be no charges from the hotel directly for this reservation as the hotel has billed Priceline Partner Solutions for the reservation, and we have paid the hotel.\n\n" + textAfterCursor; break;
+
+case  "Resolved":res.value = "Auto-resolved / Reversal Received"; break;
+
+case  "Reason code 53 without affidavit":res.value  = textBeforeCursor +  "The customer booked the reservation having first agreed to the balance, cancellation policy, and terms and conditions (T&C). Priceline Partner Solutions has no record of Cardholder making a good faith effort to contact us regarding any cancellation, refund, or service issues. There were no affidavits attached to this dispute informing the reason of the dispute, to allow Priceline Partner Solutions adequate information to address the customer's concerns. Based on reason code 53-NOT AS DESCRIBED OR DEFECTIVE, no cancellation was received via the Priceline Partner Solutions customer service phone line or via the Travel Agent site within the cancellation period, as required per the attached cancellation policy and T&C. All policies are agreed to and sent to guests during checkout via email. Any COVID 19 cancellations inside of penalty must be supported with positive test results. The customer agreed to the terms of the booking before their card was charged. However, because of the nature of Travel Agent's Services, we are not in control of the quality of rooms provided by any particular hotel at any time. Travel Agent does not guarantee the accuracy of any information on the Site, nor do we make any guarantee that the lodging establishment is not undergoing any renovation. The terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel; we are merely the facilitator of the hotel booking process. Per terms and conditions and the cancellation policy emailed to the customer at the time of booking, the customer is due no refund.\n\n" + textAfterCursor; break;
+
+case  "Customer - Currency":res.value  = textBeforeCursor + "All payments are currently processed in one of the following currencies: U.S. dollars, Great Britain Pounds, Australian Dollar, Canadian Dollar, Euro and will reflect the exchange rate in effect on the date of the payment. A customer has the option to choose their preferred currency from the above mentioned currencies. If a customer doesn't change/choose the currency type, the US Dollar will automatically be chosen as the default currency under which the transaction would be processed. Currency rates are based on various publicly available sources and should be used as guidelines only. Rates are not verified as accurate, and actual rates may vary. Currency quotes are not updated in real-time. Check the date on the currency converter feature for the day that currency was last updated. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n\n" + textAfterCursor; break;
+
+case  "Customer - Cancel policy dispute/No Show":res.value  = textBeforeCursor + "The reservation is listed as a no-show. Due to this booking being a no-show, no folio is available. No cancellation was received via the Priceline customer service phone line or via the Travel Agent site, as required per the attached cancellation policy Terms and Conditions (T&C) Part IV (C). All policies are agreed to and sent to the guest at the time of booking. Guest failed to process cancellation based on agreed-upon policy. Please see included documents supporting that cardholder is not due a credit.\n\n" + textAfterCursor; break;
+
+case  "Customer - Unable to check in/Customer Issue (Age, CC)":res.value  = textBeforeCursor +  "Please be advised that the guest will be required to provide official State or authorized government issued ID upon check-in for any Travel Agent reservation. In addition, guest is required to provide a credit or debit card upon request from the hotel for incidentals, as referenced above. Failure to produce such ID may result in forfeiture of the booking of the Travel Agent Service without any right to refund. As per Part IV [C]. Additional hotel policies are given on the confirmation page of the reservation which is also sent to customer via email.\n\n" + textAfterCursor; break;
+
+case  "Waiver - Covid-19 Contacted":res.value  = textBeforeCursor + "Priceline Partner Solutions Customer Care was working for the customer to achieve a force majeure exception to the nonrefundable cancellation policy, the customer did not allow enough time for this to be accomplished prior to filing a chargeback. Priceline Partner Solutions cannot issue a refund or waive the cancellation policy without approval from the hotel/supplier.\n" + textAfterCursor; break;
+
+case  "Hotel - Closed/Renovation":res.value  = textBeforeCursor + "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit. The customer agreed to the terms of the booking before their card was charged. Per the additional terms under Travel Agency Agreement, Section 17 states that because of the nature of Travel Agent's Services, we are not in control of the quality of rooms provided by any particular hotel at any time. Travel Agent does not guarantee the accuracy of any information on the Site, nor do we make any guarantee that the lodging establishment is not undergoing any renovation. The terms state that Priceline Partner Solutions is not responsible for the services provided at the hotel; Priceline Partner Solutions is merely the facilitator of the hotel booking process. Per terms and conditions as well as the cancellation policy emailed to the customer at the time of booking, the customer is due no refund. The hotel/ supplier has billed Priceline Partner Solutions, and we have paid the hotel/supplier.\n\n" + textAfterCursor; break;
+
+case  "Customer - Booking Error":res.value  = textBeforeCursor + "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n\n"+textAfterCursor; break;
+
+case  "Hotel - Room Type Not Available":res.value  = textBeforeCursor + "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit."+textAfterCursor; break;
+
+case  "Other - Chip liability shift (fraud)":res.value  = textBeforeCursor + "The following transaction is not fraudulent as stated. The attached documents indicate the cardholder participated in the transaction; note the AVS and CVV attached. Also, we are a Card Not Present (CNP) environment. All of our sales are made either online through websites or with a sales agent over-the-phone. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. For this reason, any CB claiming that a chip could not be read, is null and void. Please see included purchase details which show the billing data provided at the time of booking links to the cardholder. The cardholder has made no good faith effort in resolving any issues with this charge with Priceline Partner Solutions prior to filing the dispute.\n\n" + textAfterCursor; break;
+
+case  "Sales - Incorrect City/State/Property Booked":res.value  = textBeforeCursor +  "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n\n" + textAfterCursor; break;
+
+case  "Customer Service Error":res.value  = textBeforeCursor +  "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit." + textAfterCursor; break;
+
+case  "Waiver - Sold Out":res.value  = textBeforeCursor +  "Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. Please see included documents supporting that cardholder is not due a credit.\n\n"+textAfterCursor; break;
+
+case  "Waiver - Covid-19 Not Contacted":res.value  = textBeforeCursor +  "Priceline Partner Solutions was not provided the opportunity to achieve a force majeure exception to the non-refundable cancellation policy. The customer did not attempt to cancel reservation online through our Priceline Partner Solutions site or by phone through customer service. Priceline Partner Solutions was not allowed time to produce a refund prior to filing a chargeback. Hotel was not closed, nor was Priceline Partner Solutions during pandemic. Our customer care has been open and available to provided customer service. Since the customer did not contact us, and the booking was not cancelled, no refund is due.\n\n" + textAfterCursor; break;
+
+case  "Sales - Data Entry Issue (Online Reservation Only)":res.value  = textBeforeCursor +  "The reservation was made online through our website by the cardholder and all information was entered by the cardholder. The customer booked the reservation having first agreed to the full transaction amount , cancellation policy, and terms and conditions (T&C) and clicked the box agreeing to the terms and conditions at the time of booking before their card was charged and the card holder was sent confirmation mail in regards to the same. No refund is due.\n\n" + textAfterCursor; break;
+
+case  "Pending":res.value = "Case is pending."; break;
+
+case  "Risk - Fraudulent Transaction (w/ Contact)":res.value = "Customer called Priceline Partner Solutions and cancelled this reservation on MM//DD//YYYY due to _________which was selected by customer himself/herself at the time of booking. As per the cancellation policy this reservation was non-refundablepartially refundable at the time of cancellation and hence it was cancelled with full/partial cancellation charges/penalty. No refund due.\n\nIn direct communication with us, the cardholder acknowledges:\n1. Visiting our website and initiating a booking process.\n2. Seeing the final price before payment and interacting with the payment screen.\n3. Receiving a confirmation email that includes correct booking details and price.\n4. Noting specific dates, amounts, and cancellation policies—clear evidence of familiarity with the transaction.\nThese admissions directly contradict the basis of a “card not present”, as they demonstrate that the cardholder was knowingly and actively involved in the transaction.\n\nThe following transaction is not fraudulent as stated. The attached documents indicate the cardholder participated in the transaction. Also, we are a Card Not Present (CNP) environment. All of our sales purchase are made by the customer either directly through our secure online platform or via our official call center, where all transactions are handled through verified procedures. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. The attached documents indicate the cardholder participated in the transaction; note the AVS and CVV attached. The payment for this reservation processed in the United States and appeared on statement as 'HTL*_______'.Based on this, we confirm that the transaction was initiated and authorized by the cardholder and request that the chargeback be reversed. Customer was made aware of and agreed to the cancellation policy prior to confirming the booking. The attached documents indicate the cardholder participated in the transaction. The cardholder has made no good faith effort in resolving any issues with this charge with Priceline Partner Solutions prior to filing the dispute.\n\n"; break;
+
+
+}
+}
+}
+
+</script>
+
+
+
+End of file 5
+
+ 
+Beginning of file 6 recovery.gs
+
+function sendForRecovery(itn,rnum,amt,cin,cout,hotel,cbcode,notes) {
+  
+  var new_row = lastrow_recovery+1
+  recoverySheet.getRange(new_row,1).setValue(new Date()) 
+  recoverySheet.getRange(new_row,2).setValue(Session.getActiveUser().getEmail().split("@")[0])
+  recoverySheet.getRange(new_row,3).setValue(itn)
+  recoverySheet.getRange(new_row,4).setValue(rnum)
+  recoverySheet.getRange(new_row,5).setValue(amt)
+  recoverySheet.getRange(new_row,6).setValue(cin)
+  recoverySheet.getRange(new_row,7).setValue(cout)
+  recoverySheet.getRange(new_row,8).setValue(hotel)
+  recoverySheet.getRange(new_row,9).setValue(cbcode)
+  recoverySheet.getRange(new_row,10).setValue(notes)
+
+  return "Case sent for recovery."
+
+  
+}
+
+var lastrow_vbException = vbExceptionSheet.getLastRow()
+function sendForVbException(itn,rnum,amt,option,notes){
+    var new_row = lastrow_vbException+1;
+    vbExceptionSheet.getRange(new_row,1).setValue(new Date()) 
+    vbExceptionSheet.getRange(new_row,2).setValue(Session.getActiveUser().getEmail().split("@")[0])
+    vbExceptionSheet.getRange(new_row,3).setValue(itn)
+    vbExceptionSheet.getRange(new_row,4).setValue(rnum)
+    vbExceptionSheet.getRange(new_row,5).setValue(amt)
+    vbExceptionSheet.getRange(new_row,6).setValue(option)
+    vbExceptionSheet.getRange(new_row,7).setValue(notes)
+
+}
+
+
+
+function updateRefundAmount(row,amount){
+  ss.getRange(row,27).setValue(amount);
+
+}
+
+function updateRoomType(row,roomtype){
+  controllerSheet.getRange(row,18).setValue(roomtype);
+}
+
+function getPendingCases(){
+  var user = Session.getActiveUser().getEmail()
+  var RCAnalysts = ss.getRange(2,18,Lastrow).getValues();
+  var RCAValues = ss.getRange(2,17,Lastrow).getValues();
+  var rows = new Array()
+  for (i=0;i<RCAnalysts.length;i++){
+    if(RCAValues[i][0] == "Pending" && (RCAnalysts[i][0] == user)) {
+      rows.push(i+2)
+    }
+  }
+  var disputes = new Array() 
+ 
+  if(rows.length > 0){
+    for(row of rows){
+      var dispute = new Array();
+      dispute.push(row);
+      dispute.push(ss.getRange(row,1).getValue()); // caseid.
+      dispute.push(ss.getRange(row,2).getValue()); // itn
+      dispute.push(ss.getRange(row,4).getValue()); // reasoncode
+      dispute.push(Utilities.formatDate(ss.getRange(row,5).getValue(),"CST","MM/dd/yyyy")); // received
+      dispute.push(Utilities.formatDate(ss.getRange(row,6).getValue(),"CST","MM/dd/yyyy"));  // duedate
+      dispute.push(ss.getRange(row,22).getValue()); // notes
+      disputes.push(dispute);
+
+    }      
+    
+  }
+  
+  return disputes
+  
+}
+
+End of file 6
+ 
+Beginning of file 7 stylesheet.html
+<style>
+
+.highlight {
+ background-color: red;
+ font-weight: bold;
+}
+/* Basic styling for body and container */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    background: hsl(218deg 50% 91%);
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    color: hsl(233deg 36% 38%); 
+}
+
+/* Main Container */
+.container {
+  background: hsl(218deg 50% 91%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100vh - 100px); /* Full height minus header */
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Left Section: Collapsible Sections */
+.left-section {
+    flex: 0.25;
+    overflow-y: auto;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: hsl(213deg 85% 97%);
+    height: 100%;
+    position: relative;
+}
+
+.label{
+  background-color: #C2FBD7;
+  color: #333333;
+  font-size:13px;
+  width: 45%;
+  
+}
+.data{
+  background-color: #D7FDE4;
+  color: #000401;
+  font-size:13px;
+  font-weight: bold;
+}
+
+
+/* Section Headers */
+.section-header {
+    cursor: pointer;
+    background-color: hsl(233deg 20% 65%);
+    padding: 5px;
+    border: 1px solid black;
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: bold;
+    font-size:15px;
+}
+
+.section-header:hover {
+    background-color: hsl(233deg 36% 38%);
+    color: white;
+}
+
+/* Collapsible Content */
+.section-content {
+    display: none; /* Hidden by default */
+    margin-bottom: 10px;
+}
+
+/* Dropdown Menu and Input Textbox in Left Section */
+.left-section select, 
+.left-section input[type="text"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 45%; /* Adjust width for dropdowns side by side */
+    margin-right: 5px;
+}
+
+.left-section button {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.left-section button:hover {
+    background-color: #ccc;
+}
+
+/* Middle Section */
+.middle-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    padding: 10px;
+    border: 2px solid black;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: hsl(213deg 85% 97%);
+    height: 150%;
+    box-sizing: border-box;
+    color: hsl(0deg 0% 30%);
+    overflow-y: auto;
+ 
+}
+
+.middle-section label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.middle-section textarea {
+    width: 95%;
+    /*height: 100px;*/
+    padding: 10px;
+    border: 1px solid black;
+    resize: vertical; /* Allow users to resize text areas */
+    margin-bottom: 10px;
+}
+
+.middle-section button {
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #ddd;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.middle-section button:hover {
+    background-color: #ccc;
+}
+
+/* Right Section */
+
+.right-section {
+    flex: 0.25;
+    overflow-y: auto;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: hsl(213deg 85% 97%);
+    height: 100%;
+    position: relative;
+}
+
+/* Subsection Headers */
+.right-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Collapsible Content */
+.content {
+    padding: 0 10px;
+    display: none;
+    overflow: hidden;
+}
+
+/* Uploads Section */
+.uploads-section label {
+  border-width: 1px;
+  border-radius: 3px;
+  box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #000401;
+  font-size:13px;
+  font-weight:bold;
+}
+
+
+#upload {
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  color: #FFFFFF;
+  height: auto;
+  padding: 6px 20px;
+}
+
+#upload:hover{
+  background-image: linear-gradient(1deg, #4F98FD, #141BF3 60%);
+}
+
+/* Recovery Section */
+.recovery-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid black;
+    resize: vertical;
+    margin-bottom: 1px;
+}
+
+.recovery-section button {
+    padding: 10px;
+    border: 1px solid red;
+    background-color: #ddd;
+    cursor: pointer;
+    width: 100%;
+}
+
+.recovery-section button:hover {
+    background-color: red;
+}
+
+/* Queue Status Section */
+.queue-status-section div {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.queue-status div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.queue-status strong {
+    font-weight: bold;
+}
+
+#status{
+
+align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 0px;
+  border: none;
+
+  background: hsl(233deg 36% 38%);
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+  color: #DFDEDF;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+}
+
+.output { color: green; font-size:13px; }
+.error { color: red; }
+
+.action-icons {
+      font-size: 15px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+input {
+      /*width: calc(80% - 20px);  Ensure the input fits well with icons */
+      font-size: 12px;
+    }
+
+//pending table
+.working-rca{
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+  padding: 5px;
+  border: 1px solid black;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: hsl(213deg 85% 97%);
+  height: 100%;
+  box-sizing: border-box;
+  color: hsl(0deg 0% 30%);
+  overflow-y: auto; 
+}
+
+tr:nth-child(even) {
+ background-color: #e5e5e5;
+ font-size:13px;  
+  
+}
+tr:nth-child(odd) {
+ background-color: #ffffff;
+ font-size:13px;   
+  
+}
+th {
+  font-size:14px;
+  text-align: left;
+  font-weight: 20;
+  background-color: hsl(233deg 20% 65%);
+  color: black;
+  border: 1px solid #14213d;
+  padding: 4px 20px 4px 4px;
+  }
+
+  #pendingmessage{
+  padding: 10px;
+  font-weight:bolder;
+  color : #31572c;
+  
+}
+
+
+/*testing paste feature */
+.upload-box {
+      width: 200px;
+      height: 20px;
+      border: 2px dashed #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .upload-box:hover {
+      transform: scale(1.1);
+      border-color: #888;
+    }
+
+    .upload-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 1px;
+      right: 5px;
+      padding: 1px 1px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      display: none;
+      font-size: 14px;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+ /* Styling the container */
+.queue-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 15px;
+  background-color: #f7f7f7;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Group styling for the first two divs */
+.queue-status div:nth-child(1),
+.queue-status div:nth-child(2) {
+  flex: 1 1 calc(50% - 10px);
+  background-color: #e0f7fa;
+  border-radius: 6px;
+  padding: 2px;
+  font-weight: 600;
+  color: #00796b;
+  text-align: left;
+}
+
+/* Priority div should take up the full width */
+.queue-status div:nth-child(3) {
+  flex: 1 1 100%;  /* Full width */
+  background-color: #FFF5EF;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 5px;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* Styling for remaining divs */
+.queue-status div:nth-child(n+4) {
+  flex: 1 1 calc(50% - 15px); /* Two per line */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 2px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 15px;
+}
+
+/* Strong tags for labels */
+.queue-status div strong {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+/* Span tags for values */
+.queue-status div span {
+  font-size: 15px;
+  font-weight: bold;
+  color: #444;
+}
+
+.pdf-uploads label {
+  border-width: 1px;
+  border-radius: 3px;
+  box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #000401;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.success-msg {
+  color: #270;
+  background-color: #DFF2BF;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#buttonPDF {
+  transition-duration: 0.4s;
+  background-color: white;
+  padding: 5px 10px;
+  color: black;
+  border: 2px solid #04AA6D; /* Green */
+}
+
+#buttonPDF:hover {
+  background-color: #04AA6D; /* Green */
+  color: white;
+}
+
+</style>
+
+End of file 7
+ 
+Beginning of file 8 testingrcapage.html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>RCA Manager v2</title>
+  <?!= include('Stylesheet'); ?>
+  <?!= include('RCAResponse'); ?>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>RCA Manager v2</h1>
+    <p id="status"></p>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Left Section: Collapsible Sections with Dropdowns and Input -->
+    <div class="left-section">
+      <div class="section-header" onclick="toggleSection('section1')">Get Case</div>
+      <div class="section-content" id="section1">
+        <!-- Two Dropdown menus side by side -->
+        <select name="curr" id="curr">
+          <option value="">Select Currency</option>
+      <option value="USD">USD</option>
+    <option value="Non USD">Non USD</option>
+        </select>
+        <select name="portal" id="portal">
+      <option value="">Select Portal</option>
+      <option value="Amex">Amex</option>
+      <option value="Affirm">Affirm</option>
+  <option value="Braintree">Braintree</option>
+  <option value="Chase">Chase</option>  
+  <option value="Priority">Priority</option>
+</select>   
+        <br><br>
+        <!-- One line input text box for confirmation number -->
+        <input type="text" id="confirmation-number" placeholder="Enter ITN">
+        <br><br>
+        <!-- Button to get the case -->
+        <button onclick="getCase()">Get Case</button>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section2')">Case Info</div>
+      <div class="section-content" id="section2">
+        <table id="caseinfo">
+<tr>
+            <td class="label">CRow</td>
+            <td class="data" id="cId"></td>
+          </tr>
+          <tr>
+            <td class="label">Case ID</td>
+            <td class="data" id="caseid" onclick="copyToClipboard('caseid')"></td>
+          </tr>
+          <tr>
+            <td class="label" >Merchant Order #</td>
+            <td class="data"  id="itn" onclick="copyToClipboard('itn')"></td>
+          </tr>
+          <tr>
+            <td class="label">Reservation #</td>
+            <td class="data" id="rnum" onclick="copyToClipboard('rnum')"></td>
+          </tr>
+          <tr>
+            <td class="label">Reason Code</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Dispute Amount</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Dispute Type</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Refund Amount<span class="action-icons" onclick="editCell(this)">✏️</span></td>
+            <td class="data"></td>
+          </tr>
+          
+            <td class="label">Transaction Amount</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Currency</td>
+            <td class="data"></td>
+          </tr>
+          
+          <tr>
+            <td class="label">Dispute Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Due Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Portal</td>
+            <td class="data" id="alink"></td>
+          </tr>
+          <tr>
+            <td class="data" id="policy" colspan="2"></td>
+          </tr>
+          
+        </table>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section3')">Transaction Info</div>
+      <div class="section-content" id="section3">
+        <button onclick="getInfo()">Get Info</button>
+        <table id="transInfo">
+  <tr>
+            <td class="label">TRow</td>
+            <td class="data" id="tId"></td>
+          </tr>
+          <tr>
+            <td class="label">Merchant Order #</td>
+            <td class="data" id="itn2"></td>
+          </tr>
+          <tr>
+            <td class="label">Booking Date</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Hotel Name</td>
+            <td class="data" id="hotel" onclick="copyToClipboard('hotel')"></td>
+          </tr>
+          <tr>
+            <td class="label">Guest Name</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Check In</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Check Out</td>
+            <td class="data"></td>
+          </tr>
+          <tr>
+            <td class="label">Customer Email</td>
+            <td class="data"></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="section-header" onclick="toggleSection('section4')">Canned Response</div>
+      <div class="section-content" id="section4">
+        <button onclick="addCannedResponse('The customer was issued a full refund on [date] in the amount [amount currency] with ARN # [ARN]')">Fully Refunded</button><br>
+        <button onclick="addCannedResponse('The reservation was made online by the cardholder, who agreed to the full transaction amount, cancellation policy, and terms and conditions before the transaction was processed. A confirmation email was sent to the cardholder upon booking.')">Online Reservation</button><br>
+        <button onclick="addCannedResponse('Response 3')">Response 3</button><br>
+      </div>
+    </div>
+
+    <!-- Middle Section: Resizable Text Boxes and "Get Pending Cases" button -->
+    <div class="middle-section">
+      <div class="rca-section">
+          <select id="rca" onchange="fetchResponse()" style="width:340px" >
+            <option value="">Select RCA</option>
+            <option value="Customer - Cancel policy dispute/Non Refundable">Customer - Cancel policy dispute/Non Refundable</option>
+            <option value="Risk - Fraudulent Transaction">Risk - Fraudulent Transaction</option>
+            <option value="Customer - Cancel policy dispute">Customer - Cancel policy dispute</option>
+            <option value="No Reservation (No Wex)">No Reservation (No Wex)</option>
+            <option value="Customer - Taxes and Fees">Customer - Taxes and Fees</option>
+            <option value="Manual Response">Manual Response</option>
+            <option value="Customer - Cancel policy dispute (No Contact / Confirmed)">Customer - Cancel policy dispute (No Contact / Confirmed)</option>
+            <option value="Chargeback Accepted">Chargeback Accepted</option>
+            <option value="No Reservation (with WEX)">No Reservation (with WEX)</option>
+            <option value="Cancellation/Tax & Recovery (attempt to cancel)">Cancellation/Tax & Recovery (attempt to cancel)</option>
+            <option value="Duplicate bill w/ GAR ARN">Duplicate bill w/ GAR ARN</option>
+            <option value="Hotel - Unsatisfactory">Hotel - Unsatisfactory</option>
+            <option value="No Reservation (Cancelled)">No Reservation (Cancelled)</option>
+            <option value="Customer - Cancel Penalty Dispute/Early Checkout">Customer - Cancel Penalty Dispute/Early Checkout</option>
+            <option value="Customer - No Receipt">Customer - No Receipt</option>
+            <option value="Hotel - Hotel Billed Direct (Wex not charged/Direct Bill)">Hotel - Hotel Billed Direct (Wex not charged/Direct Bill)</option>
+            <option value="Cancellation/Tax & Recovery (No attempt to cancel)">Cancellation/Tax & Recovery (No attempt to cancel)</option>
+            <option value="Customer - Charge not recognized">Customer - Charge not recognized</option>
+            <option value="Hotel - Hotel revealed rate">Hotel - Hotel revealed rate</option>
+            <option value="Hotel - Hotel Billed Direct">Hotel - Hotel Billed Direct</option>
+            <option value="Duplicate bill w/ NON GAR ARN">Duplicate bill w/ NON GAR ARN</option>
+            <option value="Resolved">Resolved</option>
+            <option value="Reason code 53 without affidavit">Reason code 53 without affidavit</option>
+            <option value="Customer - Currency">Customer - Currency</option>
+            <option value="Customer - Cancel policy dispute/No Show">Customer - Cancel policy dispute/No Show</option>
+            <option value="Customer - Unable to check in/Customer Issue (Age, CC)">Customer - Unable to check in/Customer Issue (Age, CC)</option>
+            <option value="Waiver - Covid-19 Contacted">Waiver - Covid-19 Contacted</option>
+            <option value="Hotel - Closed/Renovation">Hotel - Closed/Renovation</option>
+            <option value="Customer - Booking Error">Customer - Booking Error</option>
+            <option value="Hotel - Room Type Not Available">Hotel - Room Type Not Available</option>
+            <option value="Other - Chip liability shift (fraud)">Other - Chip liability shift (fraud)</option>
+            <option value="Sales - Incorrect City/State/Property Booked">Sales - Incorrect City/State/Property Booked</option>
+            <option value="Service - Cancel Not Performed">Service - Cancel Not Performed</option>
+            <option value="Waiver - Sold Out">Waiver - Sold Out</option>
+            <option value="Waiver - Covid-19 Not Contacted">Waiver - Covid-19 Not Contacted</option>
+            <option value="Sales - Data Entry Issue (Online Reservation Only)">Sales - Data Entry Issue (Online Reservation Only)</option>
+            <option value="Pending">Pending</option>
+            </select>
+            
+            </div>
+      <label for="issuer-notes">Issuer Notes:</label>
+      <textarea id="issuer-notes" rows="4" placeholder="Enter issuer notes..." class="resizable"></textarea>
+      <div class="error" id="errorMsg"></div>
+
+      <label for="rebuttal-response" >Rebuttal Response:</label>
+      <textarea id="rebuttal-response" rows="15" placeholder="Enter rebuttal response..." class="resizable"></textarea>
+
+      <label for="internal-notes"  >Internal Notes:</label>
+      <textarea id="internal-notes" rows="2" placeholder="Enter internal notes..." class="resizable"></textarea>
+
+<div class="buttons-section">
+<button onclick="Resolve()">Resolve</button>
+    
+
+      <!-- "Get Pending Cases" button after Internal Notes -->
+      <button onclick="getPendingCases()">Get Pending Cases</button>
+    </div><div class="working-rca" style="display:none;padding:10px 2px 2px 2px">
+    <label style="display:none" id="pendingmessage"> No Pending cases!</label>
+    <table id="pendingcase" style="display:none">
+      <tr>
+  <th class="row-number">Row</th>
+  <th style="width:100px">Case Id</th>
+  <th>Merchant Order #</th>
+  <th style="width:150px">Reason Code</th>
+  <th>Received Date</th> 
+  <th>Due Date</th>
+  <th style="width:400px">Internal Notes</th>
+  </tr>
+      </table>
+
+      </div>
+      
+    </div>
+
+    <!-- Right Section: Uploads, Recovery, and Queue Status -->
+    <div class="right-section">
+
+      <!-- First Subsection: Uploads with Save Button -->
+      <div class="uploads-section">
+        <div class="section-header" onclick="toggleSection('section5')">Upload Files</div>
+      <div class="section-content" id="section5">
+  <label>Hotel Billed Merchant</label><br>
+        <input class="fileInput" type="file" id="wex" accept="image/*"><div class="output"></div><br>
+  <label>Accertify Index Score</label><br>
+        <input class="fileInput" type="file" id="ais" accept="image/*"><div class="output"></div><br>
+  <label>Refund screenshot</label><br>
+        <input class="fileInput" type="file" id="rfs" accept="image/*"><div class="output"></div><br>
+  <label>Customer Contact</label><br>
+        <input class="fileInput" type="file" id="ccontact" accept="image/*"><div class="output"></div><br>
+  <label>IP Info</label><br>
+        <input class="fileInput" type="file" id="ipinfo" accept="image/*"><div class="output"></div><br>
+  <label>Proof of Non Fraud #1</label><br>
+        <input class="fileInput" type="file" id="nonfraud1" accept="image/*"><div class="output"></div><br>
+  <label>Proof of Non Fraud #2</label><br>
+        <input class="fileInput" type="file" id="nonfraud2" accept="image/*"><div class="output"></div><br>
+
+                    
+    
+          <button id ="upload" onclick="saveFiles()">Save </button>
+        </div>
+      </div>
+
+      <!-- Second Subsection: Recovery with Resizable Textbox and Submit Button -->
+      <div class="section-header" onclick="toggleSection('section6')">Recovery</div>
+      <div class="section-content" id="section6">
+          <textarea id="recovery-notes" rows="4" cols="35" placeholder="Enter recovery notes..." class="resizable"></textarea><br>
+          <button onclick="RecoveryReq()">Submit</button><span id="icon">❌</span>
+        </div>
+      
+
+      <!-- Third Subsection: Queue Status with 4 Labels and Values -->
+      <div class="queue-status-section">
+        <div class="section-header" onclick="toggleSection('section7')">Queue Stats</div>
+      <div class="section-content" id="section7">
+          <div class="queue-status">
+            <div><strong>Label 1:</strong> <span>Value 1</span></div>
+            <div><strong>Label 2:</strong> <span>Value 2</span></div>
+            <div><strong>Label 3:</strong> <span>Value 3</span></div>
+            <div><strong>Label 4:</strong> <span>Value 4</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+<?!= include('JavaScript'); ?>
+</body>
+
+</html>
+End of file 8
+ 
+Beginning of file 9 uploader.gs
+  // Function to upload image to Google Drive
+function uploadImageToDrive(row, itn, inputId, base64Data) {
+  const folder = DriveApp.getFolderById('1XS3U6wpaPW3DVKEhEy9iPSjjJ91e71SM'); // Replace with your folder ID
+
+  if(inputId=="wex"){
+    var fileName = itn + " - Hotel Billed GAR.png"
+    var col = 20
+  }
+  else if(inputId=="ais"){
+    var fileName = itn + " - Accertify Index Score.png"
+    var col = 21
+  }
+
+  else if(inputId=="rfs"){
+    var fileName = itn + " - Refund screenshot.png"
+    var col = 22
+  }
+
+  else if(inputId=="ccontact"){
+    var fileName = itn + " - Customer contact.png"
+    var col = 23
+  }
+
+  else if(inputId=="nonfraud"){
+    var fileName = itn + " - Non Fraud Info.png"
+    var col = 24
+  }
+
+  else if(inputId=="nonfraud1"){
+    var fileName = itn + " - Non Fraud Info1.png"
+    var col = 25
+  }
+
+  else {
+    var fileName = itn + " - Non Fraud Info2.png"
+    var col = 26
+
+  }
+
+  try {
+    // Decode the Base64 data and create a blob
+    const decodedData = Utilities.base64Decode(base64Data);
+    const blob = Utilities.newBlob(decodedData, 'image/png', fileName);
+
+  
+  const uploadedFile = folder.createFile(blob);
+
+  controllerSheet.getRange(row,col).setValue(uploadedFile.getId())
+  
+  
+  return {
+    inputId: inputId,
+    status: 'Uploaded',
+    name: uploadedFile.getName(),
+    url: uploadedFile.getUrl()
+  };
+
+  } catch (error) {
+    Logger.log('Upload Error: ' + error.toString());
+    throw new Error('Failed to upload the image.');
+  }
+}
+
+const FOLDER_IDS = {
+  confirmpage: '1TgubfrYEmPVhphWoWqEs3llZu9fb4NaO',
+  checkoutpage: '1DNJmU73y3hrqT2nIBnxN31FFvqUt9toG',
+  confirmpages: '1TgubfrYEmPVhphWoWqEs3llZu9fb4NaO',
+  checkoutpages: '1DNJmU73y3hrqT2nIBnxN31FFvqUt9toG',
+  wexandrefund: '198moy73H6UE4sv3bI-l6gFy3N4CCrOUo',
+  accproof: '1nKCj2b1ZiG53BwNTL-v5D0TS-5Oq4aVb'
+};
+
+function uploadAllFiles(formData) {
+  const uploadedResults = [];
+
+  // Helper to upload a single file
+  function uploadSingle(file, folderId, label,fileName) {
+    const blob = Utilities.newBlob(Utilities.base64Decode(file.content), file.mimeType,fileName);
+    DriveApp.getFolderById(folderId).createFile(blob);
+    uploadedResults.push(`${label}: ${fileName}`);
+  }
+
+    
+  // Option 1 (Required)
+  if (formData.confirmpage) uploadSingle(formData.confirmpage, FOLDER_IDS.confirmpage, "Confirmation page",formData.itn + " - Reservation Confirmation.pdf");
+
+  // Option 2 (Required)
+  if (formData.checkoutpage) uploadSingle(formData.checkoutpage, FOLDER_IDS.checkoutpage, "Checkout page",formData.itn + " - Checkout Page.pdf");
+
+  // Option 3 (Optional, merged)
+  if (formData.confirmpages) uploadSingle(formData.confirmpages, FOLDER_IDS.confirmpages, "Confirmation pages",formData.itn + " - other reservations.pdf");
+
+  // Option 4 (Optional, merged)
+  if (formData.checkoutpages) uploadSingle(formData.checkoutpages, FOLDER_IDS.checkoutpages, "Checkout pages",formData.itn + " - other checkout pages.pdf");
+
+  if (formData.wexandrefund) uploadSingle(formData.wexandrefund, FOLDER_IDS.wexandrefund, "Hotel billed/refund proofs",formData.itn + " - other hotel billed/refund proofs.pdf");
+  if (formData.accproof) uploadSingle(formData.accproof, FOLDER_IDS.accproof, "Customer Proof",formData.itn + " - Customer Proof.pdf");
+ 
+  return { status: "success", message: "Files uploaded successfully!", uploaded: uploadedResults };
+}
+
+
+
+End of file 9
+ 
+Beginning of file 10 cannedresponses.gs
+const SHEET_NAME = "Responses";
+var ResponseSheet = SpreadsheetApp.openById('1UbklwE_AseDLOShCLXfJPNL69E6Hxm20z9ajfAckNlU')
+// Show the popup menu from your app
+
+
+
+
+
+function getUserEmail() {
+  return Session.getActiveUser().getEmail();
+}
+
+function getCannedResponses() {
+  const email = getUserEmail();
+  const sheet = ResponseSheet.getSheetByName(SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  return data
+    .filter(row => row[3] === email)
+    .map(row => ({ name: row[1], response: row[2], id: row[0] }));
+}
+
+function saveCannedResponse(name, response) {
+  const email = getUserEmail();
+  const sheet = ResponseSheet.getSheetByName(SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  const now = new Date();
+  
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][1] === name && data[i][3] === email) {
+      sheet.getRange(i+1, 3).setValue(response);
+      sheet.getRange(i+1, 5).setValue(now);
+      return "Updated";
+    }
+  }
+
+  const id = new Date().getTime(); // Simple unique ID
+  sheet.appendRow([id, name, response, email, now]);
+  return "Saved";
+}
+
+
+End of file 10
+ 
+Beginning of file 11 doget.gs
+function doGet(request) {
+  return HtmlService.createTemplateFromFile('MainRCAPage')
+      .evaluate().setTitle('CBMS RCA Manager v2')
+      .setFaviconUrl(`https://drive.google.com/uc?id=1XOOwMdi1d6IVYlDV0A9grhfXbWGyRd7X&export=download&format=png`);
+}
+
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename)
+      .getContent();
+}
+
+
+End of file 11
+
+
+
+
+
+
+
