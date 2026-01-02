@@ -1,13 +1,1 @@
-prompt
-
-Create an infographic comparing three automation deployment pathways for n8n workflows:
-
-GCP Self‑Hosted – 4 vCPU, 16 GB RAM VM running Docker + n8n Community Edition, HTTPS via managed TLS, persistent storage, full security and compliance (PCI/GDPR/SOC2). Cost $165–225/month. Highlight strong security, full data control, audit readiness.
-
-n8n Cloud Pro – vendor-hosted, TLS over HTTPS, execution logs stored on provider servers, $60/month for 10k executions. Medium security, limited compliance, vendor has access to logs. Fast to deploy.
-
-Cheap VPS Providers (Hostinger, Contabo, DigitalOcean) – single VPS 2–4 vCPU, 8–16 GB RAM, manual TLS, minimal security, no compliance guarantees, $20–40/month. Highlight high risk, insecure, and not audit-defensible.
-
-Visual style: clear infographic, professional, business presentation style. Include a table or visual chart showing cost vs. security vs. compliance. Use icons or symbols for security (shield), cost (dollar), and compliance (checkmark or certificate). Color code: green for high security/compliance, yellow for medium, red for low."
-
-
+I need to create pattern matcher of soething 
