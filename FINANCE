@@ -1,0 +1,45 @@
+You are tasked with designing a B2B FX algorithmic trading platform intended as a proof-of-concept/demo to sell to financial institutions, hedge funds, or prop trading firms. The platform must support 20–200 simultaneous users, simulating a company trading floor. The core goal is to demonstrate strategy execution, risk enforcement, and live FX connectivity, without handling banking or custody directly.
+
+Platform requirements:
+
+Asset Class: FX only initially (future expansion to equities optional).
+
+Strategy Execution: Must support multiple algorithmic strategies per user. Strategy runtime should be sandboxed and isolated for safety, ideally containerized. Preferably supports Python, but design should allow for future multi-language support.
+
+Broker Integration: Must support optional broker API integration, allowing connection to any FX broker for live execution. Paper trading is mandatory for the demo.
+
+Data Handling: Real-time FX price feeds via APIs and WebSockets. Historical tick replay for backtesting/paper trading.
+
+Risk Management / Notifications: Must include configurable risk guardrails (default example: 20% capital loss alert). Notifications can be via email, SMS, Slack, or dashboard alerts. Orchestrate the best design for safety and monitoring.
+
+Front-end UX: Clean, minimal design with light/dark mode, showing active strategies, risk metrics, and trade activity. Prioritize clarity for corporate users (demo should look professional).
+
+Backend / Architecture:
+
+Execution engine: async, multi-threaded, scalable for 20–200 users.
+
+Database: historical trades, strategy performance, real-time state.
+
+Caching: low-latency state management.
+
+Orchestration: per-strategy container isolation, scalable and reproducible.
+
+API layer: REST + WebSocket for strategy deployment, monitoring, and optional broker connectivity.
+
+Demo Considerations: Should be self-contained for live presentation. Include virtual accounts, default strategy templates (mean-reversion, trend-following, arbitrage), and a dashboard showing strategy performance and alerts.
+
+Deliverables OPUS must produce:
+
+Full system architecture diagram, showing backend, frontend, data flows, broker connectivity, and orchestration layers.
+
+Component-level responsibilities and interactions.
+
+Workflow for live strategy deployment, paper trading, and optional broker execution.
+
+Risk monitoring and notification design.
+
+Front-end layout suggestions for demo-ready corporate UX.
+
+Technology stack recommendations for each component, emphasizing Python for strategy runtime, containerization for isolation, and scalable backend.
+
+Optional enhancements to make the platform sellable to a bank, hedge fund, or prop firm.
