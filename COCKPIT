@@ -1,0 +1,111 @@
+You are tasked with designing a high-end personal trading system for one user, intended as a real-time, fully interactive FX (or multi-asset) trading cockpit. The system should be capable of executing trades via any broker API the user provides, and it must allow integration of a Python algorithm for automated strategy execution. Think of this as a hedge-fund-quality dashboard for a single trader, with live metrics, execution control, and decision support. Creativity, detail, and “dashboard bling” are essential.
+
+Requirements / Features:
+
+Live Trade Execution:
+
+Ability to pick an asset, enter trade parameters, and submit orders via any broker API (documentation will be provided).
+
+Python algorithm integration: allow the user to plug in a strategy that can execute trades automatically or semi-automatically.
+
+Configurable rule sets: define stop-loss, take-profit, position limits, and alerts.
+
+Metrics Dashboard:
+
+Real-time P&L (gross, net, and brokerage-adjusted).
+
+Real-time brokerage and fees per trade.
+
+Current positions and open orders.
+
+Historical trade summary with visual analytics.
+
+Risk metrics: exposure per asset, portfolio volatility, max drawdown, VaR-like indicators.
+
+Customizable charts: candlesticks, order overlays, profit heatmaps, P&L waterfalls, liquidity visualization.
+
+Alerts & Notifications:
+
+Configurable warnings for account thresholds (e.g., % drawdown, open positions exceeding risk limits).
+
+Trade execution confirmations, broker errors, and system notifications.
+
+Fund / Balance Integration:
+
+Display active balance, allocated capital per strategy, and cash available.
+
+Track multiple fund allocations if required.
+
+Strategy Sandbox & Simulation:
+
+Paper trading mode to test strategies without risking real money.
+
+Backtesting on historical FX data with visual overlays showing trade decisions vs. market movement.
+
+Interactive Visualizations:
+
+Real-time price feeds with depth of market / liquidity visualization.
+
+Portfolio dashboard with drag-and-drop asset allocation adjustments.
+
+Heatmaps showing performance by asset, time, or strategy.
+
+Mini dashboards for each running strategy showing signals, trades, and performance.
+
+User Experience & UI:
+
+Clean, modern design with light/dark mode.
+
+Drag-and-drop layout for dashboard widgets.
+
+Multiple “cockpit screens” for different views: strategy, P&L, order book, alerts, risk metrics.
+
+Creative Extras / Gold Features:
+
+Trade simulation playback (rewind live trades to review decisions).
+
+Broker comparison panel (for multiple APIs if connected).
+
+Market sentiment integration (news tickers, FX sentiment indexes, optional NLP feeds).
+
+Trade tagging and note-taking per position.
+
+Auto-generated strategy performance reports (PDF/email).
+
+Widget for “what-if” scenario testing: simulate moving SL/TP, leverage adjustments, or hypothetical trades.
+
+Backend & Architecture Suggestions:
+
+Strategy runtime sandboxed in Python containers.
+
+Real-time data pipeline with WebSockets / REST APIs.
+
+High-performance state management for positions and P&L (Redis or similar).
+
+Database to store historical trades, performance metrics, and strategy logs.
+
+Modular design: easy to swap broker API connectors or add new strategy modules.
+
+Security & Reliability:
+
+Authentication and authorization for user access.
+
+Basic exception handling and fail-safes for trade execution errors.
+
+Logging of all trades and strategy decisions.
+
+Deliverables OPUS must produce:
+
+Detailed architecture diagram, showing backend, data flow, strategy execution, broker integration, and dashboard layers.
+
+Component-level responsibilities, including strategy runtime, order execution, risk engine, P&L computation, and dashboard rendering.
+
+Workflow for trade execution, rule enforcement, Python strategy integration, and real-time metrics.
+
+Front-end dashboard layout, with widget suggestions, chart types, alerts panels, and customization options.
+
+Technology stack recommendation for max performance, flexibility, and single-user scalability.
+
+Optional creative suggestions for “hedge-fund-level” features to make the system visually impressive and functional.
+
+Tone: Creative, professional, and high-end; design this system as if it’s for a single trader with all the bells and whistles a fund manager would expect.
